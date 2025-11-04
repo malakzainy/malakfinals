@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/design_default_color_secondary_variant"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:rotationX="-360"
+    android:id="@+id/main"
+    tools:context=".SplashScreen">
+
+    <LinearLayout
+        android:layout_width="352dp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <FrameLayout
+            android:id="@+id/rose"
+            android:layout_width="344dp"
+            android:layout_height="319dp"
+            android:layout_marginBottom="40dp"
+            android:background="@mipmap/ic_launcher_foreground"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BreatheEasy\nKids"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/app_tagline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Your little helper for big breaths."
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/btnGo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go" />
+</RelativeLayout>

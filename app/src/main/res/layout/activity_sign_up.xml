@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F8F7"
+    android:id="@+id/main">
+
+    <LinearLayout
+        android:id="@+id/AA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- العنوان -->
+        <TextView
+            android:id="@+id/tvCreateAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:rotationX="-8"
+            android:text="Create Account"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- الاسم -->
+        <LinearLayout
+            android:id="@+id/BB"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:background="#D4F8E5"
+            android:backgroundTint="#F8D4D4"
+            android:backgroundTintMode="src_in"
+            android:clipToPadding="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="Name"
+                android:inputType="textPersonName"
+                android:paddingStart="12dp"
+                android:textColor="#000"
+                android:textColorHint="#777" />
+        </LinearLayout>
+
+        <!-- الإيميل -->
+        <LinearLayout
+            android:id="@+id/CC"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:background="#F8D4D4"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:paddingStart="12dp"
+                android:textColor="#000"
+                android:textColorHint="#777" />
+        </LinearLayout>
+
+        <!-- كلمة المرور -->
+        <LinearLayout
+            android:id="@+id/DD"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:background="#F8D4D4"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingStart="12dp"
+                android:textColor="#000"
+                android:textColorHint="#777" />
+        </LinearLayout>
+
+        <!-- تأكيد كلمة المرور -->
+        <LinearLayout
+            android:id="@+id/EE"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="24dp"
+            android:background="#F8D4D4"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <EditText
+                android:id="@+id/etConfirmPassword"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:paddingStart="12dp"
+                android:textColor="#000"
+                android:textColorHint="#777" />
+        </LinearLayout>
+
+        <!-- زر التسجيل -->
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:backgroundTint="#960000"
+            android:text="Log in"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>
