@@ -50,6 +50,13 @@ public class SplashScreen extends AppCompatActivity
                 finish();
             }
         }, 3000);
+        btnGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(SplashScreen.this, RoleSelection.class);
+                startActivity(intent);
+            }
+        });
 
 
 
