@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:padding="12dp"
-    android:id="@+id/main">
+    android:id="@+id/etAge">
 
 
     <LinearLayout
@@ -230,15 +230,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="16dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Doctor: ____________________   Signature: ________________"
-                android:textSize="12sp"/>
-
-        </LinearLayout>
+            android:paddingTop="16dp"/>
 
     </LinearLayout>
 </ScrollView>

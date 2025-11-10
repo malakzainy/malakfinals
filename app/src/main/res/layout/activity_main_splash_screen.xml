@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:rotationX="-360"
-    android:id="@+id/main"
+    android:id="@+id/etAge"
     tools:context=".SplashScreen">
 
     <LinearLayout
