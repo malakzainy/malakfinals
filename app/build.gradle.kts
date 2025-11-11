@@ -41,4 +41,20 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    //for room data base
+    implementation( "androidx.room:room-runtime:2.8.3")
+    annotationProcessor( "androidx.room:room-compiler:2.8.3")
+    // optional - RxJava2 support for Room
+    implementation ("androidx.room:room-rxjava2:2.8.3")
+    // optional - RxJava3 support for Room
+/* <<<<<<<<<<<<<<  ✨ Windsurf Command 🌟 >>>>>>>>>>>>>>>> */
+    implementation("androidx.room:room-rxjava3:2.8.3")
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation("androidx.room:room-guava:2.8.3")
+    // optional - Test helpers
+    testImplementation("androidx.room:room-testing:2.8.3")
+    // optional - Paging 3 Integration
+    implementation("androidx.room:room-paging:2.8.3")
+/* <<<<<<<<<<  a1a7706c-a214-444f-9ca5-401b8229e5d1  >>>>>>>>>>> */
+
 }
