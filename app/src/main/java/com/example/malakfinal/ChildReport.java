@@ -2,6 +2,7 @@ package com.example.malakfinal;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -16,7 +17,7 @@ public class ChildReport extends AppCompatActivity {
     private TextView Name;
     private TextView etName;
     private TextView Age;
-    private TextView etAge;
+    private EditText etAge;
     private TextView Patient;
     private TextView etPatientId;
     private TextView Diagnosis;

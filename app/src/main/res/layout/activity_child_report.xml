@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:padding="12dp"
-    android:id="@+id/etAge">
+    android:id="@+id/main">
 
 
     <LinearLayout
@@ -25,11 +25,12 @@
 
         <!-- Clinic / Doctor info (optional) -->
         <TextView
+            android:id="@+id/clinic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
             android:text="Clinic: Al-Salam Medical Center"
-            android:textSize="12sp"
-            android:paddingBottom="8dp"/>
+            android:textSize="12sp" />
 
         <!-- Card-like container -->
         <LinearLayout
@@ -86,6 +87,7 @@
                         android:textStyle="bold" />
 
                     <EditText
+                        android:id="@+id/etAge"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Age"
@@ -113,7 +115,7 @@
 
             <!-- Diagnosis -->
             <TextView
-                android:id="@+id/Diagnonsis"
+                android:id="@+id/Diagnosis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Diagnosis"
@@ -221,7 +223,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Clear"
+                android:text="Tree"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"/>
 
@@ -230,7 +232,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Print"/>
+                android:text="Weather"/>
         </LinearLayout>
 
         <!-- Footer / Signature -->

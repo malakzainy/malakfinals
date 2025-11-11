@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Malakfinal">
         <activity
+            android:name=".PlantScan"
+            android:exported="false" />
+        <activity
             android:name=".ChildReport"
             android:exported="false" />
         <activity

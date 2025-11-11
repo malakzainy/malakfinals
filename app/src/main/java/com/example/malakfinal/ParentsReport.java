@@ -16,7 +16,6 @@ public class ParentsReport extends AppCompatActivity {
     private TextView Name;
     private TextView etName;
     private TextView Age;
-    private TextView etAge;
     private TextView Patient;
     private TextView etPatientId;
     private TextView Diagnosis;
@@ -50,7 +49,6 @@ public class ParentsReport extends AppCompatActivity {
         Name = findViewById(R.id.Name);
         etName = findViewById(R.id.etName);
         Age = findViewById(R.id.Age);
-        etAge = findViewById(R.id.etAge);
         Patient = findViewById(R.id.Patient);
         etPatientId = findViewById(R.id.etPatientId);
         Diagnosis = findViewById(R.id.Diagnosis);
