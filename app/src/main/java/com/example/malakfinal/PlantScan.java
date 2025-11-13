@@ -1,6 +1,5 @@
 package com.example.malakfinal;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,36 +12,31 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class RoleSelection extends AppCompatActivity {
-    private TextView tV;
-    private Button parents;
-    private Button child;
+public class PlantScan extends AppCompatActivity
+{
+    private TextView tv_title;
+    private Button btn_take_photo;
+    private Button btn_upload;
+    private Button btn_scan_plant;
 
-    @SuppressLint("MissingInflatedId")
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_role_selection);
+        setContentView(R.layout.activity_plant_scan);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        tV = findViewById(R.id.tV);
-        parents = findViewById(R.id.parents);
-        child = findViewById(R.id.child);
-        parents.setOnClickListener(new View.OnClickListener() {
+        tv_title = findViewById(R.id.tv_title);
+        btn_take_photo = findViewById(R.id.btn_take_photo);
+        btn_upload = findViewById(R.id.btn_upload);
+        btn_scan_plant = findViewById(R.id.btn_scan_plant);
+        btn_scan_plant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RoleSelection.this, ParentsReport.class);
-                startActivity(intent);
-            }
-        });
-        child.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RoleSelection.this, ChildReport.class);
+                Intent intent = new Intent(PlantScan.this, ParentsReport.class);
                 startActivity(intent);
             }
         });

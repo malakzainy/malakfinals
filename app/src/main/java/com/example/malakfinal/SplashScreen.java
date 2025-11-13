@@ -22,14 +22,14 @@ public class SplashScreen extends AppCompatActivity
  private TextView app_name;
  private TextView app_tagline;
 
-    @SuppressLint("WrongViewCast")
+    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_splash_screen);
         btnGo = findViewById(R.id.btnGo);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.etAge), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;

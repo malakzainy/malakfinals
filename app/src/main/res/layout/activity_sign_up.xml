@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F6F8F7"
-    android:id="@+id/etAge">
+    android:id="@+id/main">
 
     <LinearLayout
         android:id="@+id/AA"

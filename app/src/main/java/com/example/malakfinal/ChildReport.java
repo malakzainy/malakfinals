@@ -41,7 +41,7 @@ public class ChildReport extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_child_report);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.etAge), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -51,7 +51,7 @@ public class ChildReport extends AppCompatActivity {
         Name = findViewById(R.id.Name);
         etName = findViewById(R.id.etName);
         Age = findViewById(R.id.Age);
-        etAge = findViewById(R.id.etAge);
+        etAge = findViewById(R.id.main);
         Patient = findViewById(R.id.Patient);
         etPatientId = findViewById(R.id.etPatientId);
         Diagnosis = findViewById(R.id.Diagnosis);
