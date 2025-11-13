@@ -49,22 +49,7 @@ public class MyUser {
     private String lastLogin;
 
 
-    // ✅ Constructor (ممكن تعمل أكثر من واحد)
-    public MyUser(String fullName, String email, String password, String role, Integer age,
-                  String gender, String diseaseType, String medication,
-                  String photoUrl, String createdAt, String lastLogin) {
-        this.fullName = fullName;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.age = age;
-        this.gender = gender;
-        this.diseaseType = diseaseType;
-        this.medication = medication;
-        this.photoUrl = photoUrl;
-        this.createdAt = createdAt;
-        this.lastLogin = lastLogin;
-    }
+
 
     // ✅ Getters and Setters
     public int getUserId() {

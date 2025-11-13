@@ -1,6 +1,5 @@
 package com.example.malakfinal.data.MyAsthmaTable;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -9,7 +8,7 @@ import androidx.room.PrimaryKey;
  */
 
 @Entity(tableName = "asthma")
-public class asthma {
+public class Asthma {
 
     // المفتاح الرئيسي
     @PrimaryKey(autoGenerate = true)
@@ -43,7 +42,7 @@ public class asthma {
     private String lastUpdated;
 
     // ✅ Constructor
-    public asthma(int userId, String diagnosisDate, String asthmaType, String severity,
+    public Asthma(int userId, String diagnosisDate, String asthmaType, String severity,
                   String symptoms, String medications, int attackFrequencyWeekly,
                   String doctorNotes, String lastUpdated) {
         this.userId = userId;
