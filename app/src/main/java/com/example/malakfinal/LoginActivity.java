@@ -8,12 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.malakfinal.data.AppDataBaseT.AppDataBase;
+import com.example.malakfinal.data.MyUserTable.MyUser;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView tvWelcome;
@@ -55,21 +59,58 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RoleSelection.class);
-                startActivity(intent);
+                if (readAndValidateFields()) {
+                    Intent intent = new Intent(LoginActivity.this, RoleSelection.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
         SignUp = findViewById(R.id.SignUp);
 
 
         SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, SignUp.class);
-                startActivity(intent);
+                if (readAndValidateFields()) {
+                    Intent intent = new Intent(LoginActivity.this, SignUp.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    public boolean readAndValidateFields() {
+        boolean isValid = true;
+        String idNumber = etIdNumber.getText().toString().trim();
+        String phoneNumber = etPhone.getText().toString().trim();
+        String password = etPass.getText().toString().trim();
+
+        if (idNumber.isEmpty()) {
+            etIdNumber.setError("Id number is required");
+            isValid = false;
+        }
+
+        if (phoneNumber.isEmpty()) {
+            etPhone.setError("Phone number is required");
+            isValid = false;
+        }
+
+        if (password.isEmpty()) {
+            etPass.setError("Password is required");
+            isValid = false;
+        }
+
+        if (isValid) {
+           AppDataBase.getDB(this).getMyUserQuery().login(idNumber, phoneNumber, password);
+
+        }
+        return isValid;
     }
 }
 
