@@ -42,7 +42,9 @@
 
         <ImageView
             android:layout_width="48dp"
-            android:layout_height="48dp" />
+            android:layout_height="48dp"
+            tools:layout_editor_absoluteX="-24dp"
+            tools:layout_editor_absoluteY="315dp" />
 
         <TextView
             android:layout_width="wrap_content"

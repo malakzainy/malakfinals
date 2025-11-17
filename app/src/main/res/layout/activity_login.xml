@@ -60,20 +60,20 @@
 
 
         <TextView
-            android:id="@+id/PhNum"
+            android:id="@+id/Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Phone Number"
+            android:text="Email"
             android:textColor="#333333"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/etPhone"
+            android:id="@+id/etMail1"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Enter your phone number"
+            android:hint="Enter your email"
             android:inputType="phone"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"

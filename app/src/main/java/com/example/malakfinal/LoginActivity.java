@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,17 +17,20 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.malakfinal.data.AppDataBaseT.AppDataBase;
 import com.example.malakfinal.data.MyUserTable.MyUser;
+import com.example.malakfinal.data.MyUserTable.MyUserQuery;
+
+import java.text.BreakIterator;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView tvWelcome;
     private TextView tvSubtitle;
     private TextView IdNum;
-    private TextView PhNum;
+    private TextView Email;
     private TextView Pass;
     private TextView tvForgotPassword;
     private TextView tvSignUp;
     private EditText etIdNumber;
-    private EditText etPhone;
+    private EditText etMail1;
     private EditText etPass;
     private Button btnLogin;
     private Button SignUp;
@@ -48,11 +50,11 @@ public class LoginActivity extends AppCompatActivity {
         tvWelcome = findViewById(R.id.tvWelcome);
         tvSubtitle = findViewById(R.id.tvSubtitle);
         IdNum = findViewById(R.id.IdNum);
-        PhNum = findViewById(R.id.PhNum);
+        Email = findViewById(R.id.Email);
         Pass = findViewById(R.id.Pass);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
         etIdNumber = findViewById(R.id.etIdNumber);
-        etPhone = findViewById(R.id.etPhone);
+        etMail1 = findViewById(R.id.etMail1);
         etPass = findViewById(R.id.etPass);
         btnLogin = findViewById(R.id.btnLogin);
 
@@ -88,7 +90,6 @@ public class LoginActivity extends AppCompatActivity {
     public boolean readAndValidateFields() {
         boolean isValid = true;
         String idNumber = etIdNumber.getText().toString().trim();
-        String phoneNumber = etPhone.getText().toString().trim();
         String password = etPass.getText().toString().trim();
 
         if (idNumber.isEmpty()) {
@@ -96,8 +97,10 @@ public class LoginActivity extends AppCompatActivity {
             isValid = false;
         }
 
-        if (phoneNumber.isEmpty()) {
-            etPhone.setError("Phone number is required");
+
+        if (Email.isEmpty())
+        {
+            etMail1.setError("Email is required");
             isValid = false;
         }
 
@@ -106,10 +109,16 @@ public class LoginActivity extends AppCompatActivity {
             isValid = false;
         }
 
-        if (isValid) {
-           AppDataBase.getDB(this).getMyUserQuery().login(idNumber, phoneNumber, password);
+        if (isValid)
+        {
+            String IdNum = etIdNumber.getText().toString().trim();
+            String Email = etMail1.getText().toString().trim();
+            String pass = etPass.getText().toString().trim();
 
+            AppDataBase.getDB(this).getMyUserQuery().insertUser(MyUser);
         }
+
+
         return isValid;
     }
 }
