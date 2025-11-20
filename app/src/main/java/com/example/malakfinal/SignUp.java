@@ -85,6 +85,12 @@ public class SignUp extends AppCompatActivity
             etConfirmPassword.setError("Passwords don't match");
             isValid = false;
         }
+        MyUser existingUser = AppDataBase.getDB(this).getMyUserQuery().getUserByEmail(email);
+        if (existingUser != null) {
+            etEmail.setError("Email already exists");
+            Toast.makeText(SignUp.this, "Email already exists", Toast.LENGTH_SHORT).show();
+            isValid = false;
+        }
         if (isValid){
             MyUser myUser = new MyUser();
             myUser.setFullName(name);
