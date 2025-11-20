@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Malakfinal">
         <activity
+            android:name=".Weather"
+            android:exported="false" />
+        <activity
+            android:name=".CameraScreen"
+            android:exported="false" />
+        <activity
             android:name=".ScanResult"
             android:exported="false" />
         <activity
@@ -29,9 +35,6 @@
         <activity
             android:name=".RoleSelection"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />

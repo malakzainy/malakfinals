@@ -51,6 +51,7 @@ public class SignUp extends AppCompatActivity
                 {
                     Intent intent = new Intent(SignUp.this, RoleSelection.class);
                     startActivity(intent);
+                    Toast.makeText(SignUp.this, "Account created successfully", Toast.LENGTH_SHORT).show();
 
                 }
                 else

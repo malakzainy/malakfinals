@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         etMail1 = findViewById(R.id.etMail1);
         etPass = findViewById(R.id.etPass);
         btnLogin = findViewById(R.id.btnLogin);
+        SignUp = findViewById(R.id.SignUp);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,25 +65,20 @@ public class LoginActivity extends AppCompatActivity {
                 if (readAndValidateFields()) {
                     Intent intent = new Intent(LoginActivity.this, RoleSelection.class);
                     startActivity(intent);
+                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        SignUp = findViewById(R.id.SignUp);
 
 
         SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (readAndValidateFields()) {
-                    Intent intent = new Intent(LoginActivity.this, SignUp.class);
-                    startActivity(intent);
-                }
-                else {
-                    Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(LoginActivity.this, SignUp.class);
+                startActivity(intent);
             }
         });
     }
@@ -91,34 +87,28 @@ public class LoginActivity extends AppCompatActivity {
         boolean isValid = true;
         String idNumber = etIdNumber.getText().toString().trim();
         String password = etPass.getText().toString().trim();
-
-        if (idNumber.isEmpty()) {
-            etIdNumber.setError("Id number is required");
-            isValid = false;
-        }
+        String email = etMail1.getText().toString().trim();
 
 
-        if (Email.isEmpty())
-        {
-            etMail1.setError("Email is required");
-            isValid = false;
-        }
 
         if (password.isEmpty()) {
             etPass.setError("Password is required");
             isValid = false;
         }
 
-        if (isValid)
-        {
-            String IdNum = etIdNumber.getText().toString().trim();
-            String Email = etMail1.getText().toString().trim();
-            String pass = etPass.getText().toString().trim();
-
-            AppDataBase.getDB(this).getMyUserQuery().insertUser(MyUser);
+        if (email.isEmpty() && !android.util.Patterns.EMAIL_ADDRESS.matcher(idNumber).matches()) {
+            etMail1.setError("Valid id number is required");
+            isValid = false;
         }
 
+        MyUserQuery userQuery = AppDataBase.getDB(this).getMyUserQuery();
+        MyUser user = userQuery.getUserByEmail(email);
 
+        if (user == null) {
+            etMail1.setError("Invalid email");
+            Toast.makeText(LoginActivity.this, "Invalid email", Toast.LENGTH_SHORT).show();
+            isValid = false;
+        }
         return isValid;
     }
 }

@@ -16,7 +16,6 @@ public class PlantScan extends AppCompatActivity
 {
     private TextView tv_title;
     private Button btn_take_photo;
-    private Button btn_upload;
     private Button btn_scan_plant;
 
     @Override
@@ -31,14 +30,21 @@ public class PlantScan extends AppCompatActivity
         });
         tv_title = findViewById(R.id.tv_title);
         btn_take_photo = findViewById(R.id.btn_take_photo);
-        btn_upload = findViewById(R.id.btn_upload);
         btn_scan_plant = findViewById(R.id.btn_scan_plant);
         btn_scan_plant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PlantScan.this, ParentsReport.class);
+                Intent intent = new Intent(PlantScan.this, ScanResult.class);
                 startActivity(intent);
             }
         });
+        btn_take_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PlantScan.this, CameraScreen.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

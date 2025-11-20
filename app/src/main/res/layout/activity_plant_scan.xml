@@ -41,8 +41,10 @@
         android:layout_marginHorizontal="24dp">
 
         <ImageView
+            android:id="@+id/camera"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            app:srcCompat="@android:drawable/ic_menu_camera"
             tools:layout_editor_absoluteX="-24dp"
             tools:layout_editor_absoluteY="315dp" />
 
@@ -79,15 +81,6 @@
             android:drawablePadding="8dp"
             android:layout_marginEnd="8dp"/>
 
-        <Button
-            android:id="@+id/btn_upload"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Upload"
-            android:backgroundTint="#EAEAEA"
-            android:textColor="@color/black"
-            android:drawablePadding="8dp"/>
     </LinearLayout>
 
     <!-- زر المسح -->

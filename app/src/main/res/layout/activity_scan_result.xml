@@ -36,35 +36,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="25dp">
-
-            <FrameLayout
-                android:layout_width="120dp"
-                android:layout_height="120dp">
-
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center" />
-            </FrameLayout>
-        </LinearLayout>
+            android:layout_marginTop="25dp"/>
 
         <!-- Plant title -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Poison Ivy"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginTop="18dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="This plant is harmful for asthma patients."
             android:textSize="14sp"
-            android:textColor="#E53935"
+            android:textColor="#D50C0C"
             android:gravity="center"
             android:layout_marginTop="6dp" />
 
@@ -182,16 +163,17 @@
 
         <!-- Green Button -->
         <Button
+            android:id="@+id/Back"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:text="Back to Scan"
-            android:textStyle="bold"
-            android:textAllCaps="false"
-            android:backgroundTint="#15E21F"
-            android:layout_marginTop="26dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="26dp"
             android:layout_marginEnd="10dp"
-            android:gravity="center" />
+            android:backgroundTint="#15E21F"
+            android:gravity="center"
+            android:text="Back to ChildReport"
+            android:textAllCaps="false"
+            android:textStyle="bold" />
 
         <!-- Save report -->
         <TextView

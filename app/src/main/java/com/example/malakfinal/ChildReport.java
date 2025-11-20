@@ -1,6 +1,8 @@
 package com.example.malakfinal;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -67,5 +69,20 @@ public class ChildReport extends AppCompatActivity {
         btnPrint = findViewById(R.id.btnPrint);
         btnSave = findViewById(R.id.btnSave);
         btnClear = findViewById(R.id.btnClear);
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Intent intent = new Intent(ChildReport.this, PlantScan.class);
+               startActivity(intent);
+            }
+        });
+        btnPrint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Intent intent = new Intent(ChildReport.this, ScanResult.class);
+               startActivity(intent);
+            }
+        });
     }
 }
+
