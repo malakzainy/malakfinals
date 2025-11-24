@@ -62,6 +62,14 @@ public class SignUp extends AppCompatActivity
         });
     }
 
+    /**
+     * This method reads and validates the fields of the sign up form. If all
+     * fields are valid, it starts the RoleSelection activity and displays a
+     * success message. Otherwise, it displays an error message.
+     *
+     *
+     * @return
+     */
     public boolean readAndValidateFields() {
         boolean isValid = true;
         String name = etName.getText().toString().trim();

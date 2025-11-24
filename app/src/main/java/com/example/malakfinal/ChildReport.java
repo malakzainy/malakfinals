@@ -83,6 +83,13 @@ public class ChildReport extends AppCompatActivity {
                startActivity(intent);
             }
         });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Intent intent = new Intent(ChildReport.this, PlantScan.class);
+               startActivity(intent);
+            }
+        });
     }
 }
 

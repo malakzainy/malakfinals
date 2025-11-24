@@ -38,13 +38,6 @@ public class PlantScan extends AppCompatActivity
                 startActivity(intent);
             }
         });
-        btn_take_photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(PlantScan.this, CameraScreen.class);
-                startActivity(intent);
-            }
-        });
 
     }
 }
