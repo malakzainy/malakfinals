@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Malakfinal">
         <activity
+            android:name=".Add"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity

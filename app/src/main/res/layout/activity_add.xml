@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Add">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="484dp"
+        android:layout_height="164dp"
+        app:srcCompat="@android:drawable/ic_menu_mapmode"
+        tools:layout_editor_absoluteX="-37dp"
+        tools:layout_editor_absoluteY="2dp"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/PlantId"
+        android:layout_width="316dp"
+        android:layout_height="59dp"
+        android:text="PlantId"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="166dp"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/title"
+        android:layout_width="329dp"
+        android:layout_height="70dp"
+        android:text="Title"
+        tools:layout_editor_absoluteX="29dp"
+        tools:layout_editor_absoluteY="234dp"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="325dp"
+        android:layout_height="75dp"
+        android:text="description"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="312dp"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,12 +8,12 @@ import androidx.room.RoomDatabase;
 
 import com.example.malakfinal.data.MyAsthmaTable.Asthma;
 import com.example.malakfinal.data.MyAsthmaTable.AsthmaQuery;
-import com.example.malakfinal.data.MyTaskTable.MyTask;
-import com.example.malakfinal.data.MyTaskTable.MyTaskQuery;
+import com.example.malakfinal.data.MyTaskTable.MyPlantQuery;
+import com.example.malakfinal.data.MyTaskTable.Plant;
 import com.example.malakfinal.data.MyUserTable.MyUser;
 import com.example.malakfinal.data.MyUserTable.MyUserQuery;
 
-@Database(entities = {MyUser.class, Asthma.class, MyTask.class}, version = 1)
+@Database(entities = {MyUser.class, Asthma.class, Plant.class}, version = 1)
 /**
  * الفئة المسؤولة عن بناء قاعدة البيانات بجدوالها
  * وتوفر لنا كائن للتعامل مع قاعدة البيانات
@@ -41,7 +41,7 @@ import com.example.malakfinal.data.MyUserTable.MyUserQuery;
          * يعيد كائن العمليات الخاصة بجدول المهمات
          * @return
          */
-        public abstract MyTaskQuery getMyTaskQuery();
+        public abstract MyPlantQuery getMyPlantQuery();
 
         /**
          * بناء قاعدة البيانات وإعادة كائن يشير إليها
@@ -61,5 +61,8 @@ import com.example.malakfinal.data.MyUserTable.MyUserQuery;
             }
             return db;
         }
-    }
+
+
+}
+
 
