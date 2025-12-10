@@ -9,6 +9,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.malakfinal.data.AppDataBaseT.AppDataBase;
 import com.example.malakfinal.data.MyTaskTable.MyPlantAdapter;
 
 import java.util.ArrayList;
@@ -30,5 +31,12 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.clear();
+        adapter.addAll(AppDataBase.getDB(this).getMyPlantQuery().getAllTasks());
+        adapter.notifyDataSetChanged();
     }
 }
