@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
  */
 
 @Entity(tableName = "asthma")
-public class Asthma {
+public class AsthmaUser {
 
     // المفتاح الرئيسي
     @PrimaryKey(autoGenerate = true)
@@ -42,9 +42,9 @@ public class Asthma {
     private String lastUpdated;
 
     // ✅ Constructor
-    public Asthma(int userId, String diagnosisDate, String asthmaType, String severity,
-                  String symptoms, String medications, int attackFrequencyWeekly,
-                  String doctorNotes, String lastUpdated) {
+    public AsthmaUser(int userId, String diagnosisDate, String asthmaType, String severity,
+                      String symptoms, String medications, int attackFrequencyWeekly,
+                      String doctorNotes, String lastUpdated) {
         this.userId = userId;
         this.diagnosisDate = diagnosisDate;
         this.asthmaType = asthmaType;

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Malakfinal">
         <activity
-            android:name=".Add"
+            android:name=".AddPlantActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

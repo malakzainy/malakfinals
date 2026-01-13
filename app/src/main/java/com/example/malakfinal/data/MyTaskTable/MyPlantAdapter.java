@@ -30,10 +30,7 @@ public class MyPlantAdapter extends ArrayAdapter<Plant> {
         View vitem = convertView;
         if (vitem == null)
                 vitem = LayoutInflater.from(getContext()).inflate(itemLayout, parent, false);
-            ImageView malak = (ImageView) vitem.findViewById(R.id.malak);
-            ImageView love = (ImageView) vitem.findViewById(R.id.love);
-            ImageView phone = (ImageView) vitem.findViewById(R.id.phone);
-            ImageView december = (ImageView) vitem.findViewById(R.id.december);
+            ImageView malak = (ImageView) vitem.findViewById(R.id.child);
             TextView tvTitle = (TextView) vitem.findViewById(R.id.tvTitle);
             TextView tvText = (TextView) vitem.findViewById(R.id.tvText);
             TextView tvImportance = (TextView) vitem.findViewById(R.id.tvImportance);
@@ -41,6 +38,7 @@ public class MyPlantAdapter extends ArrayAdapter<Plant> {
             Plant current = getItem(position);
             tvTitle.setText(current.getTitle());
             tvText.setText(current.getDescription());
+            tvImportance.setText(current.getImportance());
 
 
             return vitem;

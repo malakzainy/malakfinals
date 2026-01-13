@@ -1,6 +1,8 @@
 package com.example.malakfinal;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -33,7 +35,6 @@ public class ParentsReport extends AppCompatActivity {
     private Button btnClear;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,5 +65,13 @@ public class ParentsReport extends AppCompatActivity {
         btnPrint = findViewById(R.id.btnPrint);
         btnSave = findViewById(R.id.btnSave);
         btnClear = findViewById(R.id.btnClear);
+
+            btnClear.setOnClickListener(v -> {
+                Intent intent = new Intent(ParentsReport.this, PlantScan.class);
+                startActivity(intent);
+            });
+
+
+        };
     }
-}
+

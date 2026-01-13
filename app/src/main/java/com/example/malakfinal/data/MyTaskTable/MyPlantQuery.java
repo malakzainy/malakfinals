@@ -32,7 +32,7 @@ public interface MyPlantQuery {
 
     // 🔵 جلب كل المهمات
     @Query("SELECT * FROM Plant")
-    List<Plant> getAllTasks();
+    List<Plant> getAllPlants();
 
     // 🟣 جلب مهمة حسب رقم الـ ID
     @Query("SELECT * FROM Plant WHERE plantId = :id LIMIT 1")

@@ -16,28 +16,28 @@ import java.util.List;
  */
 
 @Dao
-public interface AsthmaQuery {
+public interface AsthmaUserQuery {
 
     // 🟩 إضافة تقرير ربو جديد
     @Insert
-    void insertAsthmaReport(Asthma asthma);
+    void insertAsthmaReport(AsthmaUser asthma);
 
     // 🟨 تعديل تقرير ربو موجود
     @Update
-    void updateAsthmaReport(Asthma asthma);
+    void updateAsthmaReport(AsthmaUser asthma);
 
     // 🟥 حذف تقرير محدد
     @Delete
-    void deleteAsthmaReport(Asthma asthma);
+    void deleteAsthmaReport(AsthmaUser asthma);
 
     // 🔵 جلب كل تقارير الربو
-    @Query("SELECT * FROM Asthma")
-    List<Asthma> getAllReports();
+    @Query("SELECT * FROM asthma")
+    List<AsthmaUser> getAllReports();
 
     // 🟣 جلب تقرير واحد حسب رقم الـ ID
-    @Query("SELECT * FROM Asthma WHERE asthmaId = :id LIMIT 1")
-    Asthma getReportById(int id);
+    @Query("SELECT * FROM asthma WHERE asthmaId = :id LIMIT 1")
+    AsthmaUser getReportById(int id);
     // ⚫ حذف كل التقارير (اختياري)
-    @Query("DELETE FROM Asthma")
+    @Query("DELETE FROM asthma")
     void deleteAllReports();
 }
