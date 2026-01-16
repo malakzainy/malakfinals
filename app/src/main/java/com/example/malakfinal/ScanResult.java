@@ -21,4 +21,5 @@ public class ScanResult extends AppCompatActivity {
             return insets;
         });
     }
+    .
 }
