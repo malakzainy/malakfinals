@@ -38,6 +38,12 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.cardview)
+    // Gemini API dependencies
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.guava:guava:31.0.1-android")
+    implementation("org.reactivestreams:reactive-streams:1.0.4")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
