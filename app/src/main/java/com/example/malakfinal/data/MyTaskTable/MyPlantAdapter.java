@@ -71,7 +71,7 @@ public class MyPlantAdapter extends ArrayAdapter<Plant> {
         if (current != null) {
             tvTitle.setText(current.getTitle());
             tvText.setText(current.getDescription());
-            tvImportance.setText(current.getImportance());
+         //   tvImportance.setText(current.getImportance());
         }
 
         return vitem;
