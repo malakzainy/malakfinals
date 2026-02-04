@@ -57,13 +57,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etMail1;
 
     /** حقل إدخال كلمة المرور */
-    private EditText etPass;
-
     /** زر تسجيل الدخول */
     private Button btnLogin;
 
+
     /** زر الانتقال إلى صفحة التسجيل */
+
     private Button SignUp;
+
 
     /**
      * تُستدعى هذه الدالة عند إنشاء الصفحة.

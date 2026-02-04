@@ -17,6 +17,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.malakfinal.data.AppDataBaseT.AppDataBase;
 import com.example.malakfinal.data.MyUserTable.MyUser;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * SignUp Activity
@@ -47,6 +50,8 @@ public class SignUp extends AppCompatActivity {
 
     /** زر إنشاء الحساب */
     private Button btnRegister;
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
 
     /**
      * دالة onCreate
@@ -69,6 +74,7 @@ public class SignUp extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+
         });
 
         // ربط عناصر الواجهة
@@ -78,6 +84,10 @@ public class SignUp extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         btnRegister = findViewById(R.id.btnRegister);
+
+        auth =FirebaseAuth.getInstance();
+        db=FirebaseFirestore.getInstance();
+
 
         /**
          * حدث زر التسجيل
@@ -180,4 +190,5 @@ public class SignUp extends AppCompatActivity {
 
         return isValid;
     }
+
 }

@@ -17,12 +17,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-        <activity
-            android:name=".Weather"
-            android:exported="false" />
-        <activity
-            android:name=".CameraScreen"
-            android:exported="false" />
+
         <activity
             android:name=".ScanResult"
             android:exported="false" />
@@ -52,7 +47,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            `
+
         </activity>
     </application>
 
