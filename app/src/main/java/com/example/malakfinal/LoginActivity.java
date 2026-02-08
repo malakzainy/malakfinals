@@ -3,7 +3,6 @@ package com.example.malakfinal;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,64 +14,31 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.malakfinal.data.AppDataBaseT.AppDataBase;
+import com.example.malakfinal.data.AppDataBase;
 import com.example.malakfinal.data.MyUserTable.MyUser;
 import com.example.malakfinal.data.MyUserTable.MyUserQuery;
+import com.google.firebase.auth.FirebaseAuth;
 
-import java.text.BreakIterator;
-
-/**
- * LoginActivity هي شاشة تسجيل الدخول للتطبيق.
- * <p>
- * تتيح هذه الصفحة للمستخدم إدخال رقم الهوية، البريد الإلكتروني،
- * وكلمة المرور، ثم التحقق من صحة البيانات وتسجيل الدخول.
- */
 public class LoginActivity extends AppCompatActivity {
 
-    /** نص الترحيب */
     private TextView tvWelcome;
-
-    /** النص الفرعي أسفل الترحيب */
     private TextView tvSubtitle;
-
-    /** تسمية حقل رقم الهوية */
     private TextView IdNum;
-
-    /** تسمية حقل البريد الإلكتروني */
     private TextView Email;
-
-    /** تسمية حقل كلمة المرور */
     private TextView Pass;
-
-    /** رابط "نسيت كلمة المرور" */
     private TextView tvForgotPassword;
-
-    /** رابط الانتقال إلى صفحة التسجيل */
     private TextView tvSignUp;
 
-    /** حقل إدخال رقم الهوية */
     private EditText etIdNumber;
-
-    /** حقل إدخال البريد الإلكتروني */
     private EditText etMail1;
+    private EditText etPass;
 
-    /** حقل إدخال كلمة المرور */
-    /** زر تسجيل الدخول */
     private Button btnLogin;
-
-
-    /** زر الانتقال إلى صفحة التسجيل */
-
     private Button SignUp;
 
+    // 🔥 Firebase
+    private FirebaseAuth auth;
 
-    /**
-     * تُستدعى هذه الدالة عند إنشاء الصفحة.
-     * تقوم بتهيئة الواجهة وربط عناصر XML بالمتغيرات البرمجية،
-     * وإعداد أحداث النقر على الأزرار.
-     *
-     * @param savedInstanceState البيانات المحفوظة عند إعادة إنشاء الصفحة
-     */
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,70 +59,105 @@ public class LoginActivity extends AppCompatActivity {
         Email = findViewById(R.id.Email);
         Pass = findViewById(R.id.Pass);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
+
         etIdNumber = findViewById(R.id.etIdNumber);
         etMail1 = findViewById(R.id.etMail1);
         etPass = findViewById(R.id.etPass);
+
         btnLogin = findViewById(R.id.btnLogin);
         SignUp = findViewById(R.id.SignUp);
 
+        // Firebase init
+        auth = FirebaseAuth.getInstance();
+
+        // 🔥 دخول تلقائي إذا المستخدم مسجل مسبقًا
+        if (auth.getCurrentUser() != null) {
+            Intent intent = new Intent(LoginActivity.this, RoleSelection.class);
+            startActivity(intent);
+            finish();
+        }
+
         // زر تسجيل الدخول
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (readAndValidateFields()) {
-                    Intent intent = new Intent(LoginActivity.this, RoleSelection.class);
-                    startActivity(intent);
-                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                }
+        btnLogin.setOnClickListener(v -> {
+
+            if (!readAndValidateFields()) {
+                Toast.makeText(LoginActivity.this,
+                        "Please fix the errors",
+                        Toast.LENGTH_SHORT).show();
+                return;
             }
+
+
+
+
         });
 
         // زر الانتقال إلى صفحة التسجيل
-        SignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, SignUp.class);
-                startActivity(intent);
-            }
+        SignUp.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, SignUp.class);
+            startActivity(intent);
         });
     }
 
     /**
-     * قراءة القيم التي أدخلها المستخدم والتحقق من صحتها.
-     * يتم التأكد من أن الحقول غير فارغة
-     * وأن البريد الإلكتروني موجود في قاعدة البيانات.
-     *
-     * @return true إذا كانت البيانات صحيحة، false إذا كانت غير صحيحة
+     * التحقق من الحقول فقط (Validation)
      */
     public boolean readAndValidateFields() {
+
         boolean isValid = true;
 
-        String idNumber = etIdNumber.getText().toString().trim();
-        String password = etPass.getText().toString().trim();
         String email = etMail1.getText().toString().trim();
+        String password = etPass.getText().toString().trim();
 
-        // التحقق من كلمة المرور
+        if (email.isEmpty() ||
+                !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etMail1.setError("Valid email is required");
+            isValid = false;
+        }
+
         if (password.isEmpty()) {
             etPass.setError("Password is required");
             isValid = false;
         }
 
-        // التحقق من البريد الإلكتروني
-        if (email.isEmpty() && !android.util.Patterns.EMAIL_ADDRESS.matcher(idNumber).matches()) {
-            etMail1.setError("Valid id number is required");
-            isValid = false;
-        }
-
-        // التحقق من وجود المستخدم في قاعدة البيانات
+        // تحقق محلي (Room) اختياري
         MyUserQuery userQuery = AppDataBase.getDB(this).getMyUserQuery();
         MyUser user = userQuery.getUserByEmail(email);
 
         if (user == null) {
-            etMail1.setError("Invalid email");
-            Toast.makeText(LoginActivity.this, "Invalid email", Toast.LENGTH_SHORT).show();
+            etMail1.setError("User not found");
             isValid = false;
+        }
+        if (isValid)
+        {
+            auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(LoginActivity.this, task -> {
+
+                        if (task.isSuccessful()) {
+
+                            Toast.makeText(LoginActivity.this,
+                                    "Login successful",
+                                    Toast.LENGTH_SHORT).show();
+
+
+                            Intent intent =
+                                    new Intent(LoginActivity.this, RoleSelection.class);
+                            startActivity(intent);
+                            finish();
+
+                        } else {
+
+                            Toast.makeText(LoginActivity.this,
+                                    "Login failed",
+                                    Toast.LENGTH_SHORT).show();
+
+                            etMail1.setError(
+                                    task.getException() != null
+                                            ? task.getException().getMessage()
+                                            : "Firebase error"
+                            );
+                        }
+                    });
         }
 
         return isValid;

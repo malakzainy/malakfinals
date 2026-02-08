@@ -2,7 +2,6 @@ package com.example.malakfinal;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
@@ -11,7 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.malakfinal.data.AppDataBaseT.AppDataBase;
+import com.example.malakfinal.data.AppDataBase;
 import com.example.malakfinal.data.MyTaskTable.MyPlantAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

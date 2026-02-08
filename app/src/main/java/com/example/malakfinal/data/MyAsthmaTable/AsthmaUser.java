@@ -1,5 +1,7 @@
 package com.example.malakfinal.data.MyAsthmaTable;
 
+import android.widget.EditText;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -15,7 +17,7 @@ public class AsthmaUser {
     private int asthmaId;
 
     // معرف المريض (ربطه بجدول User)
-    private int userId;
+    private String userId;
 
     // تاريخ التشخيص
     private String diagnosisDate;
@@ -40,9 +42,15 @@ public class AsthmaUser {
 
     // تاريخ آخر تحديث للسجل
     private String lastUpdated;
+    private String name;
+    private String  email;
+    private String password;
+    private String confirmPassword;
+
+
 
     // ✅ Constructor
-    public AsthmaUser(int userId, String diagnosisDate, String asthmaType, String severity,
+    public AsthmaUser(String userId, String diagnosisDate, String asthmaType, String severity,
                       String symptoms, String medications, int attackFrequencyWeekly,
                       String doctorNotes, String lastUpdated) {
         this.userId = userId;
@@ -55,6 +63,14 @@ public class AsthmaUser {
         this.doctorNotes = doctorNotes;
         this.lastUpdated = lastUpdated;
     }
+    public AsthmaUser (String name , String email , String password , String confirmPassword)
+    {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+
+    }
 
     // ✅ Getters and Setters
     public int getAsthmaId() {
@@ -65,11 +81,11 @@ public class AsthmaUser {
         this.asthmaId = asthmaId;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

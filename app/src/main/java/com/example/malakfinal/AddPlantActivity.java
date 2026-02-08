@@ -1,20 +1,30 @@
 package com.example.malakfinal;
 
+import static android.app.ProgressDialog.show;
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.malakfinal.data.AppDataBaseT.AppDataBase;
+import com.example.malakfinal.data.AppDataBase;
+import com.example.malakfinal.data.MyAsthmaTable.AsthmaUser;
 import com.example.malakfinal.data.MyTaskTable.Plant;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * AddPlantActivity هي شاشة تُستخدم لإضافة نبات جديد إلى قاعدة البيانات.
@@ -71,6 +81,7 @@ public class AddPlantActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     /**
@@ -113,4 +124,43 @@ public class AddPlantActivity extends AppCompatActivity {
         Toast.makeText(this, "Plant added successfully", Toast.LENGTH_SHORT).show();
         finish();
     }
+    public void saveUser(AsthmaUser user) {// الحصول على مرجع إلى عقدة "users" في قاعدة البيانات
+
+        // تهيئة Firebase Realtime Database    //مؤشر لقاعدة البيانات
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+// ‏مؤشر لجدول المستعملين
+        DatabaseReference usersRef = database.child("users");
+        // إنشاء مفتاح فريد للمستخدم الجديد
+        DatabaseReference newUserRef = usersRef.push();
+        // تعيين معرف المستخدم في كائن MyUser
+        user.setUserId(newUserRef.getKey());
+        // حفظ بيانات المستخدم في قاعدة البيانات
+        //اضافة كائن "لمجموعة" المستعملين ومعالج حدث لفحص نجاح المطلوب
+        // حدث لفحص هل تم المطلوب من قاعدة البيانات معالج
+        newUserRef.setValue(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(AddPlantActivity.this, "Succeeded to add User",  Toast.LENGTH_SHORT).show();
+                        finish();
+
+
+
+
+                        // تم حفظ البيانات بنجاح
+                        Log.d(TAG, "تم حفظ المستخدم بنجاح: " + user.getUserId());
+                        // تحديث واجهة المستخدم أو تنفيذ إجراءات أخرى
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // معالجة الأخطاء
+                        Log.e(TAG, "خطأ في حفظ المستخدم: " + e.getMessage(), e);
+                        Toast.makeText(AddPlantActivity.this, "Failed to add User", Toast.LENGTH_SHORT).show();
+                        // عرض رسالة خطأ للمستخدم
+                    }
+                });
+    }
+
 }
