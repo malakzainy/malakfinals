@@ -61,6 +61,10 @@ public class Plant {
         return title;
     }
 
+    public String FireBaseId() {
+        return null;
+    }
+
     /**
      * تعيين عنوان النبات.
      *

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -45,6 +46,7 @@ public class AddPlantActivity extends AppCompatActivity {
 
     /** زر حفظ النبات */
     private Button save;
+    private String firebaseId;
 
     /**
      * تُستدعى هذه الدالة عند إنشاء الصفحة.
@@ -64,8 +66,25 @@ public class AddPlantActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        EditText plantIdEditText = findViewById(R.id.plantId);
+        EditText titleEditText = findViewById(R.id.title);
+        EditText descriptionEditText = findViewById(R.id.description);
+        Button saveButton = findViewById(R.id.save);
 
-        save = findViewById(R.id.save);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (validateFields()) {
+                    Intent intent = new Intent(AddPlantActivity.this, ScanResult.class);
+                    startActivity(intent);
+                    finish();
+                    Toast.makeText(AddPlantActivity.this, "Plant added successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AddPlantActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         // عند الضغط على زر الحفظ
         save.setOnClickListener(new View.OnClickListener() {
@@ -120,24 +139,25 @@ public class AddPlantActivity extends AppCompatActivity {
         plant.setDescription(description);
 
         AppDataBase.getDB(this).getMyPlantQuery().insertTask(plant);
+        saveUser(plant);
 
         Toast.makeText(this, "Plant added successfully", Toast.LENGTH_SHORT).show();
         finish();
     }
-    public void saveUser(AsthmaUser user) {// الحصول على مرجع إلى عقدة "users" في قاعدة البيانات
+    public void saveUser(Plant plant) {// الحصول على مرجع إلى عقدة "users" في قاعدة البيانات
 
         // تهيئة Firebase Realtime Database    //مؤشر لقاعدة البيانات
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 // ‏مؤشر لجدول المستعملين
-        DatabaseReference usersRef = database.child("users");
+        DatabaseReference usersRef = database.child("plants");
         // إنشاء مفتاح فريد للمستخدم الجديد
         DatabaseReference newUserRef = usersRef.push();
         // تعيين معرف المستخدم في كائن MyUser
-        user.setUserId(newUserRef.getKey());
+        plant.setFireBaseId((newUserRef.getKey()));
         // حفظ بيانات المستخدم في قاعدة البيانات
         //اضافة كائن "لمجموعة" المستعملين ومعالج حدث لفحص نجاح المطلوب
         // حدث لفحص هل تم المطلوب من قاعدة البيانات معالج
-        newUserRef.setValue(user)
+        newUserRef.setValue(plant)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -164,3 +184,4 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
 }
+
