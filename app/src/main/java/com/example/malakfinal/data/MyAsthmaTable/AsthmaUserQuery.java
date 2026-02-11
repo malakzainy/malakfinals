@@ -35,7 +35,7 @@ public interface AsthmaUserQuery {
     List<AsthmaUser> getAllReports();
 
     // 🟣 جلب تقرير واحد حسب رقم الـ ID
-    @Query("SELECT * FROM asthma WHERE asthmaId = :id LIMIT 1")
+    @Query("SELECT * FROM asthma WHERE asthmaId = :id LIMIT 3")
     AsthmaUser getReportById(int id);
     // ⚫ حذف كل التقارير (اختياري)
     @Query("DELETE FROM asthma")

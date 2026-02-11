@@ -1,62 +1,51 @@
 package com.example.malakfinal.data.MyUserTable;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-/**
- * User Entity - يمثل جدول المستخدمين في قاعدة البيانات.
- * يحتوي على جميع المعلومات الضرورية للمريض أو الطبيب.
- */
-
 @Entity(tableName = "users")
 public class MyUser {
 
-    // المفتاح الرئيسي - رقم المستخدم
-    @PrimaryKey(autoGenerate = true)
-    private int userId;
+    @PrimaryKey
+    @NonNull
+    private String userId;
 
-    // الاسم الكامل
     @ColumnInfo(name = "full_name")
     private String fullName;
 
-    // البريد الإلكتروني (فريد)
     @ColumnInfo(name = "email")
     private String email;
 
-    // كلمة المرور
     private String password;
-
-    // نوع المستخدم: patient أو doctor
     private String role;
-
-    // عمر المستخدم (للمرضى)
-
     private Integer age;
-
-    // الجنس
     private String gender;
-
-    // نوع المرض (مثلاً: Asthma)
     private String diseaseType;
-    // الدواء المستخدم
     private String medication;
-    // رابط الصورة (اختياري)
     private String photoUrl;
-    // تاريخ إنشاء الحساب
     private String createdAt;
-    // آخر تسجيل دخول
     private String lastLogin;
 
+    // Constructor for Room
+    public MyUser() {
+        this.userId = ""; // Primary key cannot be null
+    }
 
+    // Constructor for creating a new user during sign-up
+    public MyUser(@NonNull String userId, String fullName, String email) {
+        this.userId = userId;
+        this.fullName = fullName;
+        this.email = email;
+    }
 
-
-    // ✅ Getters and Setters
-    public int getUserId() {
+    @NonNull
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(@NonNull String userId) {
         this.userId = userId;
     }
 
@@ -148,20 +137,12 @@ public class MyUser {
         this.lastLogin = lastLogin;
     }
 
+    @Override
     public String toString() {
         return "MyUser{" +
-                "userId=" + userId +
+                "userId='" + userId + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
-                ", age=" + age +
-                ", gender='" + gender + '\'' +
-                ", diseaseType='" + diseaseType + '\'' +
-                ", medication='" + medication + '\'' +
-                ", photoUrl='" + photoUrl + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", lastLogin='" + lastLogin + '\'' +
                 '}';
     }
 }

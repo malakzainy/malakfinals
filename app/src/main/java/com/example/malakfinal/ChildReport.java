@@ -83,7 +83,7 @@ public class ChildReport extends AppCompatActivity {
     private Button btnSave;
 
     /** زر مسح البيانات */
-    private Button btnClear;
+    private Button btnTree;
 
     /**
      * يتم استدعاء هذه الدالة عند إنشاء الشاشة.
@@ -110,7 +110,6 @@ public class ChildReport extends AppCompatActivity {
         Name = findViewById(R.id.Name);
         etName = findViewById(R.id.etName);
         Age = findViewById(R.id.Age);
-        etAge = findViewById(R.id.main);
         Patient = findViewById(R.id.Patient);
         etPatientId = findViewById(R.id.etPatientId);
         Diagnosis = findViewById(R.id.Diagnosis);
@@ -126,13 +125,13 @@ public class ChildReport extends AppCompatActivity {
 
         btnPrint = findViewById(R.id.btnPrint);
         btnSave = findViewById(R.id.btnSave);
-        btnClear = findViewById(R.id.btnClear);
+        btnTree = findViewById(R.id.btnTree);
 
         // زر مسح البيانات
-        btnClear.setOnClickListener(new View.OnClickListener() {
+        btnTree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChildReport.this, PlantScan.class);
+                Intent intent = new Intent(ChildReport.this, AddPlantActivity.class);
                 startActivity(intent);
             }
         });

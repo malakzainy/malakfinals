@@ -2,7 +2,6 @@ package com.example.malakfinal;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -127,7 +126,8 @@ public class ParentsReport extends AppCompatActivity {
 
         btnPrint = findViewById(R.id.btnPrint);
         btnSave = findViewById(R.id.btnSave);
-        btnClear = findViewById(R.id.btnClear);
+        btnClear = findViewById(R.id.btnTree);
+
 
         /**
          * حدث زر Clear
@@ -138,6 +138,8 @@ public class ParentsReport extends AppCompatActivity {
         btnClear.setOnClickListener(v -> {
             Intent intent = new Intent(ParentsReport.this, PlantScan.class);
             startActivity(intent);
+
+
         });
     }
 }

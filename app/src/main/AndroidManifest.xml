@@ -12,12 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Malakfinal">
         <activity
+            android:name=".item1"
+            android:exported="false" />
+        <activity
             android:name=".AddPlantActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".ScanResult"
             android:exported="false" />
@@ -47,7 +49,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

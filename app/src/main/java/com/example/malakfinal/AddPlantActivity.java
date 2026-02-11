@@ -1,12 +1,8 @@
 package com.example.malakfinal;
 
-import static android.app.ProgressDialog.show;
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +16,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.malakfinal.data.AppDataBase;
-import com.example.malakfinal.data.MyAsthmaTable.AsthmaUser;
 import com.example.malakfinal.data.MyTaskTable.Plant;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,7 +41,8 @@ public class AddPlantActivity extends AppCompatActivity {
 
     /** زر حفظ النبات */
     private Button save;
-    private String firebaseId;
+    private EditText plantIdEditText,titleEditText,descriptionEditText;
+
 
     /**
      * تُستدعى هذه الدالة عند إنشاء الصفحة.
@@ -66,41 +62,24 @@ public class AddPlantActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        EditText plantIdEditText = findViewById(R.id.plantId);
-        EditText titleEditText = findViewById(R.id.title);
-        EditText descriptionEditText = findViewById(R.id.description);
-        Button saveButton = findViewById(R.id.save);
-
+         plantIdEditText = findViewById(R.id.plantId);
+         titleEditText = findViewById(R.id.title);
+         descriptionEditText = findViewById(R.id.description);
+        save = findViewById(R.id.save);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validateFields()) {
-                    Intent intent = new Intent(AddPlantActivity.this, ScanResult.class);
-                    startActivity(intent);
-                    finish();
-                    Toast.makeText(AddPlantActivity.this, "Plant added successfully", Toast.LENGTH_SHORT).show();
+                    addPlant();
+                    savePlants(new Plant(title,  description));
+//                    startActivity(new Intent(AddPlantActivity.this, ScanResult.class));
+//                    finish();
                 } else {
                     Toast.makeText(AddPlantActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-        // عند الضغط على زر الحفظ
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validateFields()) {
-                    Intent intent = new Intent(AddPlantActivity.this, ScanResult.class);
-                    startActivity(intent);
-                    finish();
-                    Toast.makeText(AddPlantActivity.this, "Plant added successfully", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(AddPlantActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
     }
 
     /**
@@ -109,8 +88,8 @@ public class AddPlantActivity extends AppCompatActivity {
      * @return true إذا كانت الحقول صحيحة، false إذا كانت هناك حقول فارغة
      */
     private boolean validateFields() {
-        String titleString = String.valueOf(findViewById(R.id.title));
-        String descriptionString = String.valueOf(findViewById(R.id.description));
+        String titleString = titleEditText.getText().toString();
+        String descriptionString = descriptionEditText.getText().toString();
 
         if (titleString.isEmpty()) {
             Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show();
@@ -122,66 +101,40 @@ public class AddPlantActivity extends AppCompatActivity {
             return false;
         }
 
-        addPlant();
         return true;
     }
 
     /**
-     * إنشاء كائن Plant جديد وحفظه داخل قاعدة البيانات.
-     * يتم أخذ البيانات من الحقول الموجودة في الواجهة.
+     * إضافة النبات إلى قاعدة البيانات.
      */
     public void addPlant() {
-        title = String.valueOf(findViewById(R.id.title));
-        description = String.valueOf(findViewById(R.id.description));
+        title = titleEditText.getText().toString();
+        description = descriptionEditText.getText().toString();
 
-        Plant plant = new Plant();
-        plant.setTitle(title);
-        plant.setDescription(description);
-
-        AppDataBase.getDB(this).getMyPlantQuery().insertTask(plant);
-        saveUser(plant);
-
-        Toast.makeText(this, "Plant added successfully", Toast.LENGTH_SHORT).show();
-        finish();
+        AppDataBase.getDB(this).getMyPlantQuery().insertPlant(new Plant(title, description));
     }
-    public void saveUser(Plant plant) {// الحصول على مرجع إلى عقدة "users" في قاعدة البيانات
 
-        // تهيئة Firebase Realtime Database    //مؤشر لقاعدة البيانات
+    /**
+     * حفظ النبات في Firebase Realtime Database.
+     */
+    public void savePlants(Plant plant) {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-// ‏مؤشر لجدول المستعملين
-        DatabaseReference usersRef = database.child("plants");
-        // إنشاء مفتاح فريد للمستخدم الجديد
-        DatabaseReference newUserRef = usersRef.push();
-        // تعيين معرف المستخدم في كائن MyUser
-        plant.setFireBaseId((newUserRef.getKey()));
-        // حفظ بيانات المستخدم في قاعدة البيانات
-        //اضافة كائن "لمجموعة" المستعملين ومعالج حدث لفحص نجاح المطلوب
-        // حدث لفحص هل تم المطلوب من قاعدة البيانات معالج
-        newUserRef.setValue(plant)
+        DatabaseReference plantsRef = database.child("plants");
+        DatabaseReference newPlantRef = plantsRef.push();
+        plant.setPlantId(newPlantRef.getKey());
+        newPlantRef.setValue(plant)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(AddPlantActivity.this, "Succeeded to add User",  Toast.LENGTH_SHORT).show();
-                        finish();
-
-
-
-
-                        // تم حفظ البيانات بنجاح
-                        Log.d(TAG, "تم حفظ المستخدم بنجاح: " + user.getUserId());
-                        // تحديث واجهة المستخدم أو تنفيذ إجراءات أخرى
+                        Toast.makeText(AddPlantActivity.this, "Succeeded to add User", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AddPlantActivity.this, ScanResult.class));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // معالجة الأخطاء
-                        Log.e(TAG, "خطأ في حفظ المستخدم: " + e.getMessage(), e);
                         Toast.makeText(AddPlantActivity.this, "Failed to add User", Toast.LENGTH_SHORT).show();
-                        // عرض رسالة خطأ للمستخدم
                     }
                 });
     }
-
 }
-

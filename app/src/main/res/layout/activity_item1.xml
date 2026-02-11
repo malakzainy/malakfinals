@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="vertical"
+    android:background="#221610"
+    android:elevation="3dp"
+    android:padding="8dp"
+    android:clipToOutline="true"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/itmiimage"
+        android:layout_width="match_parent"
+        android:src="@drawable/ic_launcher_foreground"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop" />
+
+
+    <TextView
+        android:id="@+id/itmtvname1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="روزي"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/itmtveng"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="rose"
+        android:textColor="#CCCCCC"
+        android:textSize="14sp" />
+</LinearLayout>

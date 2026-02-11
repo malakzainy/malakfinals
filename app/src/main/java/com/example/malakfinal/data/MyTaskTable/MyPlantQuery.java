@@ -20,7 +20,7 @@ public interface MyPlantQuery {
 
     // 🟩 إضافة مهمة جديدة
     @Insert
-    void insertTask(Plant task);
+    void insertPlant(Plant task);
 
     // 🟨 تعديل مهمة موجودة
     @Update

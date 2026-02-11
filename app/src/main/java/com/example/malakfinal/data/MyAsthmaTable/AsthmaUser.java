@@ -1,14 +1,11 @@
 package com.example.malakfinal.data.MyAsthmaTable;
 
-import android.widget.EditText;
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 /**
  * Asthma Entity - يمثل جدول معلومات الربو للمريض.
  */
-
 @Entity(tableName = "asthma")
 public class AsthmaUser {
 
@@ -42,14 +39,11 @@ public class AsthmaUser {
 
     // تاريخ آخر تحديث للسجل
     private String lastUpdated;
-    private String name;
-    private String  email;
-    private String password;
-    private String confirmPassword;
 
+    // Constructor for Room
+    public AsthmaUser() {}
 
-
-    // ✅ Constructor
+    // Constructor أساسي لكل بيانات الربو
     public AsthmaUser(String userId, String diagnosisDate, String asthmaType, String severity,
                       String symptoms, String medications, int attackFrequencyWeekly,
                       String doctorNotes, String lastUpdated) {
@@ -63,16 +57,8 @@ public class AsthmaUser {
         this.doctorNotes = doctorNotes;
         this.lastUpdated = lastUpdated;
     }
-    public AsthmaUser (String name , String email , String password , String confirmPassword)
-    {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
 
-    }
-
-    // ✅ Getters and Setters
+    // Getters and Setters
     public int getAsthmaId() {
         return asthmaId;
     }
