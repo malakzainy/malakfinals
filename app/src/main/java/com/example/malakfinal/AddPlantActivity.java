@@ -73,6 +73,9 @@ public class AddPlantActivity extends AppCompatActivity {
                 if (validateFields()) {
                     addPlant();
                     savePlants(new Plant(title,  description));
+                    titleEditText.setText("");
+                    descriptionEditText.setText("");
+                    plantIdEditText.setText("");
 //                    startActivity(new Intent(AddPlantActivity.this, ScanResult.class));
 //                    finish();
                 } else {

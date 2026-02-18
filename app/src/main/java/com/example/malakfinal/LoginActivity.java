@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView tvWelcome;
     private TextView tvSubtitle;
-    private TextView IdNum;
     private TextView Email;
     private TextView Pass;
     private TextView tvForgotPassword;
@@ -55,15 +54,11 @@ public class LoginActivity extends AppCompatActivity {
         // ربط عناصر الواجهة
         tvWelcome = findViewById(R.id.tvWelcome);
         tvSubtitle = findViewById(R.id.tvSubtitle);
-        IdNum = findViewById(R.id.IdNum);
         Email = findViewById(R.id.Email);
         Pass = findViewById(R.id.Pass);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
-
-        etIdNumber = findViewById(R.id.etIdNumber);
         etMail1 = findViewById(R.id.etMail1);
         etPass = findViewById(R.id.etPass);
-
         btnLogin = findViewById(R.id.btnLogin);
         SignUp = findViewById(R.id.SignUp);
 

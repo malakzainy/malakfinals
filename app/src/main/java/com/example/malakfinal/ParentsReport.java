@@ -74,14 +74,12 @@ public class ParentsReport extends AppCompatActivity {
     /** حقل إدخال قيمة Peak Flow */
     private TextView etPeakFlow;
 
-    /** زر طباعة التقرير */
-    private Button btnPrint;
 
     /** زر حفظ التقرير */
     private Button btnSave;
 
     /** زر مسح / الانتقال لشاشة أخرى */
-    private Button btnClear;
+    private Button btnTree;
 
     /**
      * دالة onCreate
@@ -123,10 +121,8 @@ public class ParentsReport extends AppCompatActivity {
         etNotes = findViewById(R.id.etNotes);
         PeakFlow = findViewById(R.id.PeakFlow);
         etPeakFlow = findViewById(R.id.etPeakFlow);
-
-        btnPrint = findViewById(R.id.btnPrint);
         btnSave = findViewById(R.id.btnSave);
-        btnClear = findViewById(R.id.btnTree);
+        btnTree = findViewById(R.id.btnTree);
 
 
         /**
@@ -135,8 +131,8 @@ public class ParentsReport extends AppCompatActivity {
          * عند الضغط على الزر يتم الانتقال
          * إلى شاشة PlantScan.
          */
-        btnClear.setOnClickListener(v -> {
-            Intent intent = new Intent(ParentsReport.this, PlantScan.class);
+        btnTree.setOnClickListener(v -> {
+            Intent intent = new Intent(ParentsReport.this, AddPlantActivity.class);
             startActivity(intent);
 
 

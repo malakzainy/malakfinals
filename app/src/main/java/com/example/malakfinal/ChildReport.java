@@ -76,8 +76,7 @@ public class ChildReport extends AppCompatActivity {
     /** حقل إدخال قيمة Peak Flow */
     private TextView etPeakFlow;
 
-    /** زر طباعة التقرير */
-    private Button btnPrint;
+
 
     /** زر حفظ التقرير */
     private Button btnSave;
@@ -123,7 +122,7 @@ public class ChildReport extends AppCompatActivity {
         PeakFlow = findViewById(R.id.PeakFlow);
         etPeakFlow = findViewById(R.id.etPeakFlow);
 
-        btnPrint = findViewById(R.id.btnPrint);
+
         btnSave = findViewById(R.id.btnSave);
         btnTree = findViewById(R.id.btnTree);
 
@@ -137,19 +136,12 @@ public class ChildReport extends AppCompatActivity {
         });
 
         // زر الطباعة
-        btnPrint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChildReport.this, ScanResult.class);
-                startActivity(intent);
-            }
-        });
 
         // زر الحفظ
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChildReport.this, PlantScan.class);
+                Intent intent = new Intent(ChildReport.this, AddPlantActivity.class);
                 startActivity(intent);
             }
         });

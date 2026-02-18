@@ -39,27 +39,6 @@
 
 
         <TextView
-            android:id="@+id/IdNum"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="ID Number"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/etIdNumber"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Enter your ID Number"
-            android:inputType="number"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColorHint="#9E9E9E" />
-
-
-        <TextView
             android:id="@+id/Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
