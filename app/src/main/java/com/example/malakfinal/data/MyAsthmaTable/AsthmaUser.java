@@ -11,7 +11,7 @@ public class AsthmaUser {
 
     // المفتاح الرئيسي
     @PrimaryKey(autoGenerate = true)
-    private int asthmaId;
+    private String asthmaId;
 
     // معرف المريض (ربطه بجدول User)
     private String userId;
@@ -43,27 +43,14 @@ public class AsthmaUser {
     // Constructor for Room
     public AsthmaUser() {}
 
-    // Constructor أساسي لكل بيانات الربو
-    public AsthmaUser(String userId, String diagnosisDate, String asthmaType, String severity,
-                      String symptoms, String medications, int attackFrequencyWeekly,
-                      String doctorNotes, String lastUpdated) {
-        this.userId = userId;
-        this.diagnosisDate = diagnosisDate;
-        this.asthmaType = asthmaType;
-        this.severity = severity;
-        this.symptoms = symptoms;
-        this.medications = medications;
-        this.attackFrequencyWeekly = attackFrequencyWeekly;
-        this.doctorNotes = doctorNotes;
-        this.lastUpdated = lastUpdated;
-    }
+
 
     // Getters and Setters
-    public int getAsthmaId() {
+    public String getAsthmaId() {
         return asthmaId;
     }
 
-    public void setAsthmaId(int asthmaId) {
+    public void setAsthmaId(String asthmaId) {
         this.asthmaId = asthmaId;
     }
 

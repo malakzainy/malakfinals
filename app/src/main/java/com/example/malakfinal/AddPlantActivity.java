@@ -62,7 +62,7 @@ public class AddPlantActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-         plantIdEditText = findViewById(R.id.plantId);
+         plantIdEditText = findViewById(R.id.PlantId);
          titleEditText = findViewById(R.id.title);
          descriptionEditText = findViewById(R.id.description);
         save = findViewById(R.id.save);
@@ -71,11 +71,11 @@ public class AddPlantActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (validateFields()) {
-                    addPlant();
+                   // addPlant();
                     savePlants(new Plant(title,  description));
                     titleEditText.setText("");
                     descriptionEditText.setText("");
-                    plantIdEditText.setText("");
+                //    plantIdEditText.setText("");
 //                    startActivity(new Intent(AddPlantActivity.this, ScanResult.class));
 //                    finish();
                 } else {
@@ -91,15 +91,15 @@ public class AddPlantActivity extends AppCompatActivity {
      * @return true إذا كانت الحقول صحيحة، false إذا كانت هناك حقول فارغة
      */
     private boolean validateFields() {
-        String titleString = titleEditText.getText().toString();
-        String descriptionString = descriptionEditText.getText().toString();
+         title = titleEditText.getText().toString();
+        description = descriptionEditText.getText().toString();
 
-        if (titleString.isEmpty()) {
+        if (title.isEmpty()) {
             Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (descriptionString.isEmpty()) {
+        if (description.isEmpty()) {
             Toast.makeText(this, "Description is required", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -125,10 +125,11 @@ public class AddPlantActivity extends AppCompatActivity {
         DatabaseReference plantsRef = database.child("plants");
         DatabaseReference newPlantRef = plantsRef.push();
         plant.setPlantId(newPlantRef.getKey());
-        newPlantRef.setValue(plant)
+        plantsRef.child(plant.getPlantId()).setValue(plant)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        addPlant();
                         Toast.makeText(AddPlantActivity.this, "Succeeded to add User", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AddPlantActivity.this, ScanResult.class));
                     }

@@ -6,12 +6,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.malakfinal.data.MyAsthmaTable.AsthmaUser;
+import com.example.malakfinal.data.MyTaskTable.Plant;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.AttributedString;
 
 /**
  * ChildReport هي شاشة تعرض تقريرًا طبيًا لطفل.
@@ -141,10 +152,85 @@ public class ChildReport extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChildReport.this, AddPlantActivity.class);
-                startActivity(intent);
+        // read and validate all fields
+        String name = etName.getText().toString().trim();
+        if (name.isEmpty()) {
+            etName.setError("Name is required");
+            return;
+        }
+
+        String age = etAge.getText().toString().trim();
+        if (age.isEmpty()) {
+            etAge.setError("Age is required");
+            return;
+        }
+
+        String patientId = etPatientId.getText().toString().trim();
+        if (patientId.isEmpty()) {
+            etPatientId.setError("Patient ID is required");
+            return;
+        }
+
+        String diagnosis = etDiagnosis.getText().toString().trim();
+        if (diagnosis.isEmpty()) {
+            etDiagnosis.setError("Diagnosis is required");
+            return;
+        }
+
+        String lastVisit = etLastVisit.getText().toString().trim();
+        if (lastVisit.isEmpty()) {
+            etLastVisit.setError("Last Visit is required");
+            return;
+        }
+
+        String medications = etMedications.getText().toString().trim();
+        if (medications.isEmpty()) {
+            etMedications.setError("Medications is required");
+            return;
+        }
+
+        String notes = etNotes.getText().toString().trim();
+        if (notes.isEmpty()) {
+            etNotes.setError("Notes is required");
+            return;
+        }
+
+        String peakFlow = etPeakFlow.getText().toString().trim();
+        if (peakFlow.isEmpty()) {
+            etPeakFlow.setError("Peak Flow is required");
+            return;
+        }
+
+
+              // todo read and validate
+                // todo save astama user
             }
         });
+    }
+
+    /**
+     * حفظ النبات في Firebase Realtime Database.
+     */
+    public void savePlants(AsthmaUser asthma) {
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference plantsRef = database.child("asthmaUsers");
+        DatabaseReference newPlantRef = plantsRef.push();
+        asthma.setAsthmaId(newPlantRef.getKey());
+        plantsRef.child(asthma.getAsthmaId()).setValue(asthma)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        Toast.makeText(ChildReport.this, "Succeeded to add User", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ChildReport.this, ScanResult.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ChildReport.this, "Failed to add User", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
 

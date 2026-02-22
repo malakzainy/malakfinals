@@ -13,7 +13,7 @@ import com.example.malakfinal.data.MyTaskTable.Plant;
 import com.example.malakfinal.data.MyUserTable.MyUser;
 import com.example.malakfinal.data.MyUserTable.MyUserQuery;
 
-@Database(entities = {MyUser.class, AsthmaUser.class, Plant.class}, version = 2, exportSchema = false)
+@Database(entities = {MyUser.class, AsthmaUser.class, Plant.class}, version = 3, exportSchema = false)
 /**
  * الفئة المسؤولة عن بناء قاعدة البيانات بجدوالها
  * وتوفر لنا كائن للتعامل مع قاعدة البيانات

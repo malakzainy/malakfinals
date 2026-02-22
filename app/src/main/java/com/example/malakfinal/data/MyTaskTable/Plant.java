@@ -18,6 +18,8 @@ public class Plant {
     public Plant(String title, String description) {
         // Default constructor required for calls to DataSnapshot.getValue(Plant.class)
         this.plantId = ""; // Initialize to non-null
+        this.title = title;
+        this.description = description;
     }
 
     @NonNull
