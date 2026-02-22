@@ -11,7 +11,7 @@ public class AsthmaUser {
 
     // المفتاح الرئيسي
     @PrimaryKey(autoGenerate = true)
-    private String asthmaId;
+    private int asthmaId;
 
     // معرف المريض (ربطه بجدول User)
     private String userId;
@@ -46,11 +46,11 @@ public class AsthmaUser {
 
 
     // Getters and Setters
-    public String getAsthmaId() {
+    public int getAsthmaId() {
         return asthmaId;
     }
 
-    public void setAsthmaId(String asthmaId) {
+    public void setAsthmaId(int asthmaId) {
         this.asthmaId = asthmaId;
     }
 

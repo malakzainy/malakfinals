@@ -215,8 +215,8 @@ public class ChildReport extends AppCompatActivity {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         DatabaseReference plantsRef = database.child("asthmaUsers");
         DatabaseReference newPlantRef = plantsRef.push();
-        asthma.setAsthmaId(newPlantRef.getKey());
-        plantsRef.child(asthma.getAsthmaId()).setValue(asthma)
+        asthma.setUserId(newPlantRef.getKey());
+        plantsRef.child(asthma.getUserId()).setValue(asthma)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

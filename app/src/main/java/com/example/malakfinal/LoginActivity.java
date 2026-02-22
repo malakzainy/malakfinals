@@ -56,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         tvSubtitle = findViewById(R.id.tvSubtitle);
         Email = findViewById(R.id.Email);
         Pass = findViewById(R.id.Pass);
-        tvForgotPassword = findViewById(R.id.tvForgotPassword);
         etMail1 = findViewById(R.id.etMail1);
         etPass = findViewById(R.id.etPass);
         btnLogin = findViewById(R.id.btnLogin);
