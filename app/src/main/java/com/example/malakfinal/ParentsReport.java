@@ -131,6 +131,15 @@ public class ParentsReport extends AppCompatActivity {
          * عند الضغط على الزر يتم الانتقال
          * إلى شاشة PlantScan.
          */
+
+        // زر الانتقال إلى صفحة التسجيل
+        // View v ->
+        //لما ينضغط الزر، رح ينادي دالة ويمرر فيها الزر نفسه كمتغير اسمه v
+        //View: هاي نوع البيانات (Data Type)
+        //بـ Android، أي زر أو عنصر على الشاشة هو كائن من نوع View
+        //يعني الزر نفسه يعتبر View.
+        //v: هذا اسم المتغير (Variable name)
+        //هو بيمثل الزر اللي انضغط عليه.
         btnTree.setOnClickListener(v -> {
             Intent intent = new Intent(ParentsReport.this, AddPlantActivity.class);
             startActivity(intent);

@@ -212,6 +212,21 @@ public class ChildReport extends AppCompatActivity {
      * حفظ النبات في Firebase Realtime Database.
      */
     public void savePlants(AsthmaUser asthma) {
+        /**
+         * مرجع إلى الجذر (Root) في Firebase Realtime Database.
+         *
+         * <p>
+         * يقوم هذا السطر بإنشاء كائن من نوع DatabaseReference
+         * يشير إلى الجذر الأساسي لقاعدة البيانات باستخدام
+         * FirebaseDatabase.getInstance().
+         * </p>
+         *
+         * يمكن استخدام هذا المرجع لقراءة البيانات أو إضافتها
+         * أو تعديلها أو حذفها من قاعدة البيانات.
+         *
+         * مثال:
+         * database.child("users").setValue(userObject);
+         */
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         DatabaseReference plantsRef = database.child("asthmaUsers");
         DatabaseReference newPlantRef = plantsRef.push();

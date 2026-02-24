@@ -63,7 +63,7 @@ public class SignUp extends AppCompatActivity {
         //Realtime Database
 
         // زر إنشاء الحساب
-        btnRegister.setOnClickListener(v -> {
+        btnRegister.setOnClickListener(v -> { //واجهة تطبيف interface معالج حدث clickلا يمكن بناء كائن منه
             validateAndSignUp();
         });
     }

@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // زر تسجيل الدخول
-        btnLogin.setOnClickListener(v -> {
+        btnLogin.setOnClickListener(v -> { //واجهة تطبيف interface معالج حدث clickلا يمكن بناء كائن منه
 
             if (!readAndValidateFields()) {
                 Toast.makeText(LoginActivity.this,
@@ -90,7 +90,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // زر الانتقال إلى صفحة التسجيل
-        SignUp.setOnClickListener(v -> {
+        // View v ->
+        //لما ينضغط الزر، رح ينادي دالة ويمرر فيها الزر نفسه كمتغير اسمه v
+        //View: هاي نوع البيانات (Data Type)
+        //بـ Android، أي زر أو عنصر على الشاشة هو كائن من نوع View
+        //يعني الزر نفسه يعتبر View.
+        //v: هذا اسم المتغير (Variable name)
+        //هو بيمثل الزر اللي انضغط عليه.
+        SignUp.setOnClickListener(v -> { //واجهة تطبيف interface معالج حدث clickلا يمكن بناء كائن منه
             Intent intent = new Intent(LoginActivity.this, SignUp.class);
             startActivity(intent);
         });
