@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 /**
  * Asthma Entity - يمثل جدول معلومات الربو للمريض.
  */
+//  تحديد الفئة كجدول قاعدة البيانات
 @Entity(tableName = "asthma")
 public class AsthmaUser {
 

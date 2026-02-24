@@ -12,12 +12,19 @@ import com.example.malakfinal.data.MyTaskTable.MyPlantQuery;
 import com.example.malakfinal.data.MyTaskTable.Plant;
 import com.example.malakfinal.data.MyUserTable.MyUser;
 import com.example.malakfinal.data.MyUserTable.MyUserQuery;
-
+// version
+//عند التعديل على هيكل قاعدة البيانات (Schema) مثل:
+//تضيف عمود جديد
+//تحذف عمود
+//تغيّر نوع بيانات
+//تضيف جدول جديد
+//يجب تغيير رقم الـ version.
 @Database(entities = {MyUser.class, AsthmaUser.class, Plant.class}, version = 3, exportSchema = false)
 /**
  * الفئة المسؤولة عن بناء قاعدة البيانات بجدوالها
  * وتوفر لنا كائن للتعامل مع قاعدة البيانات
  */
+// هدف قاعدة البيانات بشكل عام : حفظ معطيات تطبيق بشكل مرتب
     public abstract class AppDataBase extends RoomDatabase {
 
         /**

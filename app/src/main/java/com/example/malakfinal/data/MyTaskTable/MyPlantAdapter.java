@@ -35,6 +35,7 @@ public class MyPlantAdapter extends ArrayAdapter<Plant> {
      * @param objects  قائمة كائنات Plant التي سيتم عرضها
      */
     public MyPlantAdapter(@NonNull Context context, int resource, @NonNull List<Plant> objects) {
+         // Adapter هو وسيط يين مصدر معطيات وكائن لعرض هذه المعطيات
         super(context, resource, objects);
         this.itemLayout = resource;
     }

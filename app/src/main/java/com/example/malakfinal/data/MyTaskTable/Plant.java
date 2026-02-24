@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Plant {
 
-    @PrimaryKey
+    @PrimaryKey //مفتاح رئيسي مع قيم تلقائية
     @NonNull
     private String plantId;
 

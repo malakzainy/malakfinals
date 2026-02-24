@@ -52,6 +52,7 @@ public class AddPlantActivity extends AppCompatActivity {
      */
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
+    // onCreate تتنفذ مرة واحدة عند فتح هذه الشاشة
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -63,7 +64,7 @@ public class AddPlantActivity extends AppCompatActivity {
             return insets;
         });
          plantIdEditText = findViewById(R.id.PlantId);
-         titleEditText = findViewById(R.id.title);
+         titleEditText = findViewById(R.id.title); //  البحث عن العنصر الذي يحمل المعرفID المسمى title في ملف التصميم وربطه بالمتغير البرمجي  titleEditText
          descriptionEditText = findViewById(R.id.description);
         save = findViewById(R.id.save);
 

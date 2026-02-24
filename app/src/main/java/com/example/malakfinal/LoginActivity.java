@@ -43,6 +43,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        // to Activity activity_login يحدد ملف التنسيق
+        //هذه العملية تابعه للفئة Activity
+        //يبني الكائن في واجهة التنسيقactivity_login
         setContentView(R.layout.activity_login);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

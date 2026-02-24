@@ -19,7 +19,8 @@ import java.util.List;
 public interface AsthmaUserQuery {
 
     // 🟩 إضافة تقرير ربو جديد
-    @Insert
+
+    @Insert //   اضافة سطر جديد(Row) او مجموعة اسطر الى الجدول المحدد في قاعدة البيانات
     void insertAsthmaReport(AsthmaUser asthma);
 
     // 🟨 تعديل تقرير ربو موجود
@@ -35,6 +36,10 @@ public interface AsthmaUserQuery {
     List<AsthmaUser> getAllReports();
 
     // 🟣 جلب تقرير واحد حسب رقم الـ ID
+    // SELECT * → اختار كل الأعمدة
+    //FROM asthma → من جدول اسمه asthma
+    //WHERE asthmaId = :id → اللي الـ asthmaId تبعه بساوي القيمة اللي بتمريرها
+    //LIMIT 3 → رجّع أول 3 نتائج فقط
     @Query("SELECT * FROM asthma WHERE asthmaId = :id LIMIT 3")
     AsthmaUser getReportById(int id);
     // ⚫ حذف كل التقارير (اختياري)

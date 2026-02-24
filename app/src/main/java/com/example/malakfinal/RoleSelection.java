@@ -69,9 +69,10 @@ public class RoleSelection extends AppCompatActivity {
          * عند الضغط على الزر يتم الانتقال
          * إلى شاشة تقرير الأهل (ParentsReport).
          */
-        parents.setOnClickListener(new View.OnClickListener() {
+        parents.setOnClickListener(new View.OnClickListener() { //واجهة تطبيف interface معالج حدث clickلا يمكن بناء كائن منه
             @Override
             public void onClick(View view) {
+                // ويبني كائنا من نوع intent يستعمل للانتقال من شاشة الى اخرى
                 Intent intent = new Intent(RoleSelection.this, ParentsReport.class);
                 startActivity(intent);
             }

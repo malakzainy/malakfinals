@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
      * حتى تظهر أحدث البيانات.
      */
     @Override
-    protected void onResume() {
+    protected void onResume() { // تتنفذ دائما عند فتح هذه الشاشة
         super.onResume();
         adapter.clear();
         adapter.addAll(AppDataBase.getDB(this).getMyPlantQuery().getAllPlants());
