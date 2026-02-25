@@ -126,6 +126,16 @@ public class SignUp extends AppCompatActivity {
                 });
 
     }
+    /**
+     * تقوم هذه الدالة بحفظ بيانات المستخدم في قاعدة البيانات المحلية (Room).
+     *
+     * <p>تقوم بإنشاء كائن من الفئة MyUser باستخدام المعطيات الممررة،
+     * ثم تقوم بإدخاله إلى قاعدة البيانات المحلية عن طريق الـ DAO.</p>
+     *
+     * @param userId المعرّف الفريد للمستخدم
+     * @param name   اسم المستخدم
+     * @param email  البريد الإلكتروني للمستخدم
+     */
 
     private void saveUserToLocalStorage(String userId, String name, String email) {
         MyUser myUser = new MyUser(userId, name, email);

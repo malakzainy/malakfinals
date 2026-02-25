@@ -148,7 +148,9 @@ public class ChildReport extends AppCompatActivity {
 
         // زر الطباعة
 
-        // زر الحفظ
+        //الـ Listener “يستمع” للحدث، وعندما يحدث ينفذ الكود الذي حددته. زر الحفظ
+        //setOnClickListener هي ميثود في Android تُستخدم لجعل عنصر واجهة المستخدم (مثل زر Button) يتفاعل عند الضغط عليه.
+        //عندما تضغط على الزر، يتم تنفيذ الكود الموجود داخل Listener.
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

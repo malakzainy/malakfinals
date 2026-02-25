@@ -47,4 +47,16 @@ public interface MyPlantQuery {
     @Query("DELETE FROM Plant")
     void deleteAllTasks();
 }
-
+// @Override
+//@Override هي Annotation (تعليمة توضيحية) بنحطها فوق دالة لما نكون عم نعيد تعريف (Override) دالة موجودة أصلاً في كلاس أب (Superclass) أو Interface.
+//تتأكد إنك فعلاً عم تعيد تعريف دالة موجودة
+//إذا غلطت باسم الدالة أو نوع البراميترات، المترجم (Compiler) بيعطيك خطأ.
+//توضيح للكود
+//أي مبرمج يشوفها يعرف إن هاي الدالة جاية من كلاس أب أو Interface.
+//
+// @NonNull
+//هذا المتغير أو البراميتر أو القيمة الراجعة لازم ما تكون null.
+//منع NullPointerException
+//تساعد Android Studio يعطيك تحذير إذا حاولت تمرر null
+//توضح للمبرمجين إن القيمة إلزامية
+//

@@ -125,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // تحقق محلي (Room) اختياري
+        // يُستخدم عادةً في Room Database (Android) للحصول على كائن الـ DAO الذي تتعامل من خلاله مع قاعدة البيانات.
         MyUserQuery userQuery = AppDataBase.getDB(this).getMyUserQuery();
         MyUser user = userQuery.getUserByEmail(email);
 
@@ -135,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         if (isValid)
         {
             auth.signInWithEmailAndPassword(email, password)
+                    // هي تُنفَّذ عندما تنتهي العملية بالكامل سواء نجحت ✅ أو فشلت
                     .addOnCompleteListener(LoginActivity.this, task -> {
 
                         if (task.isSuccessful()) {
