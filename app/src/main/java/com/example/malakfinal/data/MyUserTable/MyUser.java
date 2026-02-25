@@ -16,17 +16,17 @@ public class MyUser {
     private String fullName;
 
     @ColumnInfo(name = "email")
-    private String email;
+    private String email;// الايميل
 
-    private String password;
-    private String role;
-    private Integer age;
-    private String gender;
-    private String diseaseType;
-    private String medication;
-    private String photoUrl;
-    private String createdAt;
-    private String lastLogin;
+    private String password;// الباسوورد السيسما
+    private String role;// الدور
+    private Integer age;//العمر
+    private String gender;// الجنس
+    private String diseaseType;//نوع المرض
+    private String medication;//الدواء
+    private String photoUrl;//رابط لصورة
+    private String createdAt;// تم انشاءه في
+    private String lastLogin;//اخر دخول
 
     // Constructor for Room
     public MyUser() {
@@ -146,3 +146,16 @@ public class MyUser {
                 '}';
     }
 }
+// @Override
+//@Override هي Annotation (تعليمة توضيحية) بنحطها فوق دالة لما نكون عم نعيد تعريف (Override) دالة موجودة أصلاً في كلاس أب (Superclass) أو Interface.
+//تتأكد إنك فعلاً عم تعيد تعريف دالة موجودة
+//إذا غلطت باسم الدالة أو نوع البراميترات، المترجم (Compiler) بيعطيك خطأ.
+//توضيح للكود
+//أي مبرمج يشوفها يعرف إن هاي الدالة جاية من كلاس أب أو Interface.
+//
+// @NonNull
+//هذا المتغير أو البراميتر أو القيمة الراجعة لازم ما تكون null.
+//منع NullPointerException
+//تساعد Android Studio يعطيك تحذير إذا حاولت تمرر null
+//توضح للمبرمجين إن القيمة إلزامية
+//

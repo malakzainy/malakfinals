@@ -3,7 +3,20 @@ plugins {
     id("com.google.gms.google-services")
     //id("androidx.room")
 }
-
+//Gradle هو نظام Build System يُستخدم لبناء وتشغيل المشاريع البرمجية، وأشهر استخدام له هو في Android.
+//
+//ببساطة 👇
+//Gradle هو المسؤول عن:
+//
+//تحميل المكتبات (Dependencies)
+//
+//ترجمة الكود (Compile)
+//
+//إنشاء ملف APK أو AAB
+//
+//إدارة الإصدارات
+//
+//تنفيذ المهام مثل test و clean
 android {
     namespace = "com.example.malakfinal"
     compileSdk = 36

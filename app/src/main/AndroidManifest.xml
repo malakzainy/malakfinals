@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
+
 
     <application
         android:allowBackup="true"
@@ -12,9 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Malakfinal">
         <activity
-            android:name=".item1"
-            android:exported="false" />
-        <activity
             android:name=".AddPlantActivity"
             android:exported="false" />
         <activity
@@ -23,9 +27,7 @@
         <activity
             android:name=".ScanResult"
             android:exported="false" />
-        <activity
-            android:name=".PlantScan"
-            android:exported="false" />
+
         <activity
             android:name=".ChildReport"
             android:exported="false" />

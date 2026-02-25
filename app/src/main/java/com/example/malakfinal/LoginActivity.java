@@ -25,15 +25,11 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvSubtitle;
     private TextView Email;
     private TextView Pass;
-    private TextView tvForgotPassword;
     private TextView tvSignUp;
-
-    private EditText etIdNumber;
-    private EditText etMail1;
-    private EditText etPass;
-
-    private Button btnLogin;
-    private Button SignUp;
+    private EditText etMail1;  // ادخال الايميل
+    private EditText etPass;// ادخال كلمة السر
+    private Button btnLogin;// زر الانتقال الى الصفحة الرئيسية
+    private Button SignUp;// زر النتقال الى صفحة تسجيل الدخول
 
     // 🔥 Firebase
     private FirebaseAuth auth;
@@ -125,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // تحقق محلي (Room) اختياري
+        // يُستخدم عادةً في Room Database (Android) للحصول على كائن الـ DAO الذي تتعامل من خلاله مع قاعدة البيانات.
         MyUserQuery userQuery = AppDataBase.getDB(this).getMyUserQuery();
         MyUser user = userQuery.getUserByEmail(email);
 
@@ -135,6 +132,7 @@ public class LoginActivity extends AppCompatActivity {
         if (isValid)
         {
             auth.signInWithEmailAndPassword(email, password)
+                    // هي تُنفَّذ عندما تنتهي العملية بالكامل سواء نجحت ✅ أو فشلت
                     .addOnCompleteListener(LoginActivity.this, task -> {
 
                         if (task.isSuccessful()) {

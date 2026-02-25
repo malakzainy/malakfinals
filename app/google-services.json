@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1020257165496",
+    "firebase_url": "https://malakfinal2-default-rtdb.firebaseio.com",
+    "project_id": "malakfinal2",
+    "storage_bucket": "malakfinal2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020257165496:android:e95ab6ae7ef6810523144d",
+        "android_client_info": {
+          "package_name": "com.example.malakfinal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHBe10f5TSLzxpL9nDSRDVoOGUSbDvxYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

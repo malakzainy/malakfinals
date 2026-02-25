@@ -27,12 +27,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUp extends AppCompatActivity {
 
-    private TextView tvCreateAccount;
-    private EditText etName;
-    private EditText etEmail;
-    private EditText etPassword;
-    private EditText etConfirmPassword;
-    private Button btnRegister;
+    private TextView tvCreateAccount; // بناء حساب
+    private EditText etName; // ادخال الاسم
+    private EditText etEmail; // ادخال الايميل
+    private EditText etPassword; // ادخال كلمة السر
+    private EditText etConfirmPassword; // التاكيد على كلمة السر
+    private Button btnRegister; // زر الانتقال الى الصفحه التانيه
 
     // 🔥 Firebase
     private FirebaseAuth auth;
@@ -126,6 +126,16 @@ public class SignUp extends AppCompatActivity {
                 });
 
     }
+    /**
+     * تقوم هذه الدالة بحفظ بيانات المستخدم في قاعدة البيانات المحلية (Room).
+     *
+     * <p>تقوم بإنشاء كائن من الفئة MyUser باستخدام المعطيات الممررة،
+     * ثم تقوم بإدخاله إلى قاعدة البيانات المحلية عن طريق الـ DAO.</p>
+     *
+     * @param userId المعرّف الفريد للمستخدم
+     * @param name   اسم المستخدم
+     * @param email  البريد الإلكتروني للمستخدم
+     */
 
     private void saveUserToLocalStorage(String userId, String name, String email) {
         MyUser myUser = new MyUser(userId, name, email);
