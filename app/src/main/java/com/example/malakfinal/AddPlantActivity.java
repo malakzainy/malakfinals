@@ -345,4 +345,4 @@ public class AddPlantActivity extends AppCompatActivity {
 //منع NullPointerException
 //تساعد Android Studio يعطيك تحذير إذا حاولت تمرر null
 //توضح للمبرمجين إن القيمة إلزامية
-//
+//.
