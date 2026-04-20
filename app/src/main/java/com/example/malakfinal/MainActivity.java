@@ -11,7 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.malakfinal.data.AppDataBase;
-import com.example.malakfinal.data.MyTaskTable.MyPlantAdapter;
+import com.example.malakfinal.data.MyTask.MyPlantAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
      * حتى تظهر أحدث البيانات.
      */
     @Override
+    //MainActivity זימון למחלקת
     protected void onResume() { // تتنفذ دائما عند فتح هذه الشاشة
         super.onResume();
         adapter.clear();

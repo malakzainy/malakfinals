@@ -1,4 +1,4 @@
-package com.example.malakfinal.data.MyTaskTable;
+package com.example.malakfinal.data.MyTask;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

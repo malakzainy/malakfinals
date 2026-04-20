@@ -63,6 +63,7 @@ public class SplashScreen extends AppCompatActivity {
      */
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
+    //זימון למחלקת MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

@@ -16,13 +16,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.malakfinal.data.MyAsthmaTable.AsthmaUser;
-import com.example.malakfinal.data.MyTaskTable.Plant;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.text.AttributedString;
 
 /**
  * ChildReport هي شاشة تعرض تقريرًا طبيًا لطفل.
@@ -103,6 +100,7 @@ public class ChildReport extends AppCompatActivity {
      * @param savedInstanceState البيانات المحفوظة عند إعادة إنشاء الصفحة
      */
     @Override
+    // זימון למחלקת ChildReport
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);

@@ -46,6 +46,7 @@ public class RoleSelection extends AppCompatActivity {
      */
     @SuppressLint("MissingInflatedId")
     @Override
+    //RoleSelection זימון למחלקת
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);

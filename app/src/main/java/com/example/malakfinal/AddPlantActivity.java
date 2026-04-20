@@ -27,7 +27,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.malakfinal.data.AppDataBase;
-import com.example.malakfinal.data.MyTaskTable.Plant;
+import com.example.malakfinal.data.MyTask.Plant;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -40,8 +40,6 @@ import com.google.firebase.database.FirebaseDatabase;
  * ثم حفظه في قاعدة البيانات عند الضغط على زر الحفظ.
  */
 public class AddPlantActivity extends AppCompatActivity {
-
-
 
     /** عنوان النبات */
     private String title;
@@ -57,16 +55,9 @@ public class AddPlantActivity extends AppCompatActivity {
     private ActivityResultLauncher<String> requestReadMediaImagesPermission;
     private ActivityResultLauncher<String> requestReadMediaVideoPermission;
     private ActivityResultLauncher<String> requestReadExternalStoragePermission;
-
-
     private ImageView ivSelectedImage; //صفة كمؤشر لهذا الكائن
     private Uri selectedImageUri;//صفة لحفظ عنوان الصورة بعد اختيارها
     private ActivityResultLauncher<String> pickImage;// ‏كائن لطلب الصورة من الهاتف
-
-
-
-
-
 
     /**
      * تُستدعى هذه الدالة عند إنشاء الصفحة.
@@ -77,6 +68,7 @@ public class AddPlantActivity extends AppCompatActivity {
     @SuppressLint({"WrongViewCast", "MissingInflatedId"}) //تجاهل تحذير معيّن صادر من نظام Lint.
     @Override
     // onCreate تتنفذ مرة واحدة عند فتح هذه الشاشة
+    //AddPlantActivity זימון למחלקת
     protected void onCreate(Bundle savedInstanceState) {
         // * يستدعي onCreate للكلاس الأب لضبط إعدادات الـ Activity الأساسية.
         super.onCreate(savedInstanceState);
@@ -193,6 +185,7 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
     // دالة لفحص وطلب الأذونات
+    // AddPlantActivity זימון למחלקת
     private void checkAndRequestPermissions() {
         // فحص وطلب إذن READ_MEDIA_IMAGES (للإصدارات الحديثة)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // أندرويد 13+
@@ -246,6 +239,7 @@ public class AddPlantActivity extends AppCompatActivity {
      *
      * @return true إذا كانت الحقول صحيحة، false إذا كانت هناك حقول فارغة
      */
+    //זימון למחלקת AddPlantActivity
     private boolean validateFields() {
         //  استخراج
          title = titleEditText.getText().toString();
@@ -285,6 +279,7 @@ public class AddPlantActivity extends AppCompatActivity {
     /**
      * حفظ النبات في Firebase Realtime Database.
      */
+    //זימון למחלקת AddPlantActivity
     public void savePlants(Plant plant) { // "plants"الحصول على مرجع الى عقدة البيانات في قاعدة
         /**
          * مرجع إلى الجذر (Root) في Firebase Realtime Database.
@@ -332,6 +327,7 @@ public class AddPlantActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }
 // @Override
 //@Override هي Annotation (تعليمة توضيحية) بنحطها فوق دالة لما نكون عم نعيد تعريف (Override) دالة موجودة أصلاً في كلاس أب (Superclass) أو Interface.
@@ -345,4 +341,4 @@ public class AddPlantActivity extends AppCompatActivity {
 //منع NullPointerException
 //تساعد Android Studio يعطيك تحذير إذا حاولت تمرر null
 //توضح للمبرمجين إن القيمة إلزامية
-//.
+//..

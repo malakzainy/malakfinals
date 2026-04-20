@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @SuppressLint("MissingInflatedId")
     @Override
+    //LoginActivity זימון למחלקת
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -102,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * التحقق من الحقول فقط (Validation)
      */
+    //LoginActivity זימון למחלקת
     public boolean readAndValidateFields() {
 
         boolean isValid = true;

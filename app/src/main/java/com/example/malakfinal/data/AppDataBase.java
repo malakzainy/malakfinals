@@ -8,8 +8,8 @@ import androidx.room.RoomDatabase;
 
 import com.example.malakfinal.data.MyAsthmaTable.AsthmaUser;
 import com.example.malakfinal.data.MyAsthmaTable.AsthmaUserQuery;
-import com.example.malakfinal.data.MyTaskTable.MyPlantQuery;
-import com.example.malakfinal.data.MyTaskTable.Plant;
+import com.example.malakfinal.data.MyTask.MyPlantQuery;
+import com.example.malakfinal.data.MyTask.Plant;
 import com.example.malakfinal.data.MyUserTable.MyUser;
 import com.example.malakfinal.data.MyUserTable.MyUserQuery;
 // version

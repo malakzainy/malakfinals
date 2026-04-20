@@ -39,6 +39,7 @@ public class SignUp extends AppCompatActivity {
 
     @SuppressLint("MissingInflatedId")
     @Override
+    // LoginActivity זימון למחלקת
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -67,7 +68,7 @@ public class SignUp extends AppCompatActivity {
             validateAndSignUp();
         });
     }
-
+    //SignUp זימון למחלקת
     private void validateAndSignUp() {
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
@@ -100,6 +101,7 @@ public class SignUp extends AppCompatActivity {
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
+                    //(Task<AuthResult> task)
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Firebase user created successfully, now save to local database
@@ -137,6 +139,7 @@ public class SignUp extends AppCompatActivity {
      * @param email  البريد الإلكتروني للمستخدم
      */
 
+    //SignUp זימון למחלקת
     private void saveUserToLocalStorage(String userId, String name, String email) {
         MyUser myUser = new MyUser(userId, name, email);
         AppDataBase.getDB(this).getMyUserQuery().insertUser(myUser);
