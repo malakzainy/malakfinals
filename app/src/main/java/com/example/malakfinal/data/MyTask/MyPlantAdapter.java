@@ -83,7 +83,7 @@ public class MyPlantAdapter extends ArrayAdapter<Plant> {
         return reminderTime;
     }
 
-    public static void setReminderTime(long reminderTime) {
+    public void setReminderTime(long reminderTime) {
         this.reminderTime = reminderTime;
     }
 }

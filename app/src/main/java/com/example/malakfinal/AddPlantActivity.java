@@ -395,10 +395,7 @@ public class AddPlantActivity extends AppCompatActivity {
         btnSetReminder.setOnClickListener(v -> {
             showDateTimePicker();
         });
-        //هاد السطر مش متاكده منو
-        MyPlantAdapter.setReminderTime(selectedReminderTime);
     }
-
 }
 // @Override
 //@Override هي Annotation (تعليمة توضيحية) بنحطها فوق دالة لما نكون عم نعيد تعريف (Override) دالة موجودة أصلاً في كلاس أب (Superclass) أو Interface.
