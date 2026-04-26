@@ -4,13 +4,19 @@ import static android.content.ContentValues.TAG;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,11 +39,15 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.malakfinal.data.AppDataBase;
 import com.example.malakfinal.data.MyTask.MyPlantAdapter;
 import com.example.malakfinal.data.MyTask.Plant;
+import com.example.malakfinal.data.TaskReminderReceiver;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Calendar;
 
 /**
@@ -64,7 +74,7 @@ public class AddPlantActivity extends AppCompatActivity {
     private TextView tvReminderTime;
 
     //الوقت المحدد بالملي ثانيه
-    private long selectedReminderTime = 0;
+    private long selectedReminderTime = -1;
     private EditText plantIdEditText,titleEditText,descriptionEditText;
 
     // مُشغّلات لطلب الأذونات
@@ -72,7 +82,7 @@ public class AddPlantActivity extends AppCompatActivity {
     private ActivityResultLauncher<String> requestReadMediaVideoPermission;
     private ActivityResultLauncher<String> requestReadExternalStoragePermission;
     private ImageView ivSelectedImage; //صفة كمؤشر لهذا الكائن
-    private Uri selectedImageUri;//صفة لحفظ عنوان الصورة بعد اختيارها
+    private Uri selectedImageUri=null;//صفة لحفظ عنوان الصورة بعد اختيارها
     private ActivityResultLauncher<String> pickImage;// ‏كائن لطلب الصورة من الهاتف
 
     /**
@@ -206,7 +216,12 @@ public class AddPlantActivity extends AppCompatActivity {
                 if (validateFields()) {
                    // addPlant();
                     //استدعاء الداله
-                    savePlants(new Plant(title,  description));
+                    Plant P = new Plant();
+                    P.setTitle(title);
+                    P.setDescription(description);
+                    P.setImage(convertImageToString(selectedImageUri));
+                    savePlants(P);
+
                     // مسح حقول الادخال
                     titleEditText.setText("");
                     descriptionEditText.setText("");
@@ -217,6 +232,10 @@ public class AddPlantActivity extends AppCompatActivity {
                     Toast.makeText(AddPlantActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 }
             }
+        });
+
+        btnSetReminder.setOnClickListener(v -> {
+            showDateTimePicker();
         });
     }
 
@@ -290,14 +309,51 @@ public class AddPlantActivity extends AppCompatActivity {
             Toast.makeText(this, "Description is required", Toast.LENGTH_SHORT).show();
             return false;
         }
+        if( selectedImageUri==null)
+        {
+            Toast.makeText(this, "image is required", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
 
         return true;
     }
 
     /**
+     * Converts an image Uri to a Base64 string.
+     *
+     * @param uri The Uri of the image to convert.
+     * @return The Base64 string representation of the image.
+     */
+    public String convertImageToString(Uri uri) {
+        InputStream inputStream = null;
+        String imageString = null;
+        // تحتوي هذه الدالة على وظيفة تحويل الصورة من مكان التخزين المؤقت إلى نص بنموذج Base64 ليتم تخزينه في قاعدة البيانات، وهذا يتيح للبرنامج عرض الصورة من قاعدة البيانات في وقت لاحق بدون الحاجة إلى فتح الصورة من جهاز المستخدم.
+        try {
+            inputStream = getContentResolver().openInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            if (bitmap == null) {
+                Toast.makeText(this, "Failed to process image", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+            // Compress image to keep Base64 string within reasonable limit
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
+            byte[] imageBytes = outputStream.toByteArray();
+            imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+            return imageString;
+        } catch (FileNotFoundException e) {
+            Toast.makeText(this, "Failed file not found", Toast.LENGTH_SHORT).show();
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    /**
      * إضافة النبات إلى قاعدة البيانات.
      */
-    public void addPlant() {
+    public void addPlantToRoom() {
         title = titleEditText.getText().toString();
         description = descriptionEditText.getText().toString();
         // * إدخال نبات جديد في قاعدة البيانات.
@@ -351,7 +407,9 @@ public class AddPlantActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        addPlant();
+                        addPlantToRoom();
+                        scheduleAlarm(plant,selectedReminderTime);
+
                         Toast.makeText(AddPlantActivity.this, "Succeeded to add User", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AddPlantActivity.this, ScanResult.class));
                     }
@@ -386,16 +444,43 @@ public class AddPlantActivity extends AppCompatActivity {
                 date.set(Calendar.MINUTE, minute);
                 date.set(Calendar.SECOND, 0);
                 selectedReminderTime = date.getTimeInMillis();// הזמן שנבחר במלישניות
+
                 tvReminderTime.setText(date.getTime().toString());//הצגת הזמן
             }, currentDate.get(Calendar.HOUR_OF_DAY), currentDate.get(Calendar.MINUTE), false).show();
         }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE)).show();
 
 
         //استدعاء إجراء عند النقر على زر btnSetReminder
-        btnSetReminder.setOnClickListener(v -> {
-            showDateTimePicker();
-        });
+
     }
+
+    private void scheduleAlarm(Plant plant, Long time) {
+        if(time==-1)return;//stop
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        //תזמון הפעלה של
+        //TaskReminderReceiver
+        Intent intent = new Intent(this, TaskReminderReceiver.class);
+        //מעבירים את הנתונים לברודקסט רסיבר
+        intent.putExtra("title", "check with doctor");//
+        intent.putExtra("text", plant.getDescription());//الشرح عن النبته
+        //הכנת אובייקט תיזמון
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int)System.currentTimeMillis(), intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+
+        if (alarmManager != null) {
+            //יוצרים לפי גרסת מערכת הטלפון
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (alarmManager.canScheduleExactAlarms()) {
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+                } else {
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,time, pendingIntent);
+                }
+            } else {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+            }
+        }
+    }
+
 }
 // @Override
 //@Override هي Annotation (تعليمة توضيحية) بنحطها فوق دالة لما نكون عم نعيد تعريف (Override) دالة موجودة أصلاً في كلاس أب (Superclass) أو Interface.

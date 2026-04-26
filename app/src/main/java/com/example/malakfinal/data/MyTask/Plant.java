@@ -22,6 +22,8 @@ public class Plant {
     private String description;// معطيات معلومات عن النبته
     private String image;//صورة لنبته
 
+    public Plant()
+    {}
     public Plant(String title, String description) {
         // Default constructor required for calls to DataSnapshot.getValue(Plant.class)
         this.plantId = ""; // Initialize to non-null
