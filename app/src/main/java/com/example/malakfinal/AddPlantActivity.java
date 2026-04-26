@@ -2,7 +2,10 @@ package com.example.malakfinal;
 
 import static android.content.ContentValues.TAG;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -27,11 +31,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.malakfinal.data.AppDataBase;
+import com.example.malakfinal.data.MyTask.MyPlantAdapter;
 import com.example.malakfinal.data.MyTask.Plant;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Calendar;
 
 /**
  * AddPlantActivity هي شاشة تُستخدم لإضافة نبات جديد إلى قاعدة البيانات.
@@ -49,6 +56,15 @@ public class AddPlantActivity extends AppCompatActivity {
 
     /** زر حفظ النبات */
     private Button save;
+
+    //زر لفتح نافظة اختيار الوقت
+    private Button btnSetReminder;
+
+    //يعرض الوقت المحدد
+    private TextView tvReminderTime;
+
+    //الوقت المحدد بالملي ثانيه
+    private long selectedReminderTime = 0;
     private EditText plantIdEditText,titleEditText,descriptionEditText;
 
     // مُشغّلات لطلب الأذونات
@@ -75,6 +91,21 @@ public class AddPlantActivity extends AppCompatActivity {
         // * يفعّل وضع Edge-to-Edge للـ Activity الحالي لتمديد المحتوى أسفل أشرطة النظام.
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_plant); //مسؤول عن ربط ملف التصميم xml بكود java الخاص بالنشاط
+
+
+
+
+        //مش متاكده اذا لازم احطها بهاي الشاشة
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            }
+        }
+
+
+
+
 
 
         // تسجيل مُشغّل لطلب إذن READ_MEDIA_IMAGES
@@ -163,6 +194,11 @@ public class AddPlantActivity extends AppCompatActivity {
          titleEditText = findViewById(R.id.title); //  البحث عن العنصر الذي يحمل المعرفID المسمى title في ملف التصميم وربطه بالمتغير البرمجي  titleEditText
          descriptionEditText = findViewById(R.id.description);
         save = findViewById(R.id.save);
+        btnSetReminder = findViewById(R.id.btnSetReminder);
+        tvReminderTime = findViewById(R.id.tvReminderTime);
+
+
+
 
         save.setOnClickListener(new View.OnClickListener() { //واجهة تطبيف interface معالج حدث clickلا يمكن بناء كائن منه
             @Override
@@ -327,7 +363,39 @@ public class AddPlantActivity extends AppCompatActivity {
                     }
                 });
     }
+    //بعرفش اذا محلها صح notification
+    //طلب اذن الاشعارات
 
+    private final ActivityResultLauncher<String> requestNotificationPermissionLauncher = registerForActivityResult( new ActivityResultContracts.RequestPermission(),
+            isGranted -> {
+                if (!isGranted) {
+                    Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+    );
+    //اختيار الوقت ويحفظ الوقت المحدد
+    private void showDateTimePicker() {
+        final Calendar currentDate = Calendar.getInstance();
+        final Calendar date = Calendar.getInstance();
+        //יצירת דיאלוג וטיפול באירוע הזמן שנבחר
+        //إنشاء حوار والتعامل مع الحدث الزمني المحدد
+        new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {//אירוע בחירת הזמן
+            date.set(year, monthOfYear, dayOfMonth);
+            new TimePickerDialog(this, (view1, hourOfDay, minute) -> {
+                date.set(Calendar.HOUR_OF_DAY, hourOfDay);//הזמן שנבחר
+                date.set(Calendar.MINUTE, minute);
+                date.set(Calendar.SECOND, 0);
+                selectedReminderTime = date.getTimeInMillis();// הזמן שנבחר במלישניות
+                tvReminderTime.setText(date.getTime().toString());//הצגת הזמן
+            }, currentDate.get(Calendar.HOUR_OF_DAY), currentDate.get(Calendar.MINUTE), false).show();
+        }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE)).show();
+
+
+        //استدعاء إجراء عند النقر على زر btnSetReminder
+        btnSetReminder.setOnClickListener(v -> {
+            showDateTimePicker();
+        });
+    }
 }
 // @Override
 //@Override هي Annotation (تعليمة توضيحية) بنحطها فوق دالة لما نكون عم نعيد تعريف (Override) دالة موجودة أصلاً في كلاس أب (Superclass) أو Interface.

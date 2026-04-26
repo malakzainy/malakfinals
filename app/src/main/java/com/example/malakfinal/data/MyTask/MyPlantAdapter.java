@@ -26,6 +26,8 @@ public class MyPlantAdapter extends ArrayAdapter<Plant> {
 
     /** رقم مورد التصميم (layout) الخاص بكل عنصر في القائمة */
     private final int itemLayout;
+    /**Reminder time in millisecond*/
+    public long reminderTime;
 
     /**
      * المُنشئ الخاص بـ MyPlantAdapter.
@@ -76,6 +78,13 @@ public class MyPlantAdapter extends ArrayAdapter<Plant> {
         }
 
         return vitem;
+    }
+    public long getReminderTime() {
+        return reminderTime;
+    }
+
+    public void setReminderTime(long reminderTime) {
+        this.reminderTime = reminderTime;
     }
 }
 // @Override
