@@ -325,6 +325,7 @@ public class AddPlantActivity extends AppCompatActivity {
      * @param uri The Uri of the image to convert.
      * @return The Base64 string representation of the image.
      */
+    // AddPlantActivity זימון למחלקת
     public String convertImageToString(Uri uri) {
         InputStream inputStream = null;
         String imageString = null;
@@ -353,6 +354,7 @@ public class AddPlantActivity extends AppCompatActivity {
     /**
      * إضافة النبات إلى قاعدة البيانات.
      */
+    // AddPlantActivity זימון למחלקת
     public void addPlantToRoom() {
         title = titleEditText.getText().toString();
         description = descriptionEditText.getText().toString();
@@ -432,6 +434,7 @@ public class AddPlantActivity extends AppCompatActivity {
             }
     );
     //اختيار الوقت ويحفظ الوقت المحدد
+    // AddPlantActivity זימון למחלקת
     private void showDateTimePicker() {
         final Calendar currentDate = Calendar.getInstance();
         final Calendar date = Calendar.getInstance();
@@ -453,7 +456,7 @@ public class AddPlantActivity extends AppCompatActivity {
         //استدعاء إجراء عند النقر على زر btnSetReminder
 
     }
-
+    // AddPlantActivity זימון למחלקת
     private void scheduleAlarm(Plant plant, Long time) {
         if(time==-1)return;//stop
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);

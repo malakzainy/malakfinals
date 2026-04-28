@@ -200,10 +200,6 @@ public class ChildReport extends AppCompatActivity {
             etPeakFlow.setError("Peak Flow is required");
             return;
         }
-
-
-              // todo read and validate
-                // todo save astama user
             }
         });
     }
