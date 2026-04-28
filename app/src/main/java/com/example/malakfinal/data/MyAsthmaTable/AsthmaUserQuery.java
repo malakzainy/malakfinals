@@ -54,7 +54,7 @@ public interface AsthmaUserQuery {
     @Query("DELETE FROM asthma")
     void deleteAllReports();
 }
-// @Override
+// @Override>>>>
 //@Override هي Annotation (تعليمة توضيحية) بنحطها فوق دالة لما نكون عم نعيد تعريف (Override) دالة موجودة أصلاً في كلاس أب (Superclass) أو Interface.
 //تتأكد إنك فعلاً عم تعيد تعريف دالة موجودة
 //إذا غلطت باسم الدالة أو نوع البراميترات، المترجم (Compiler) بيعطيك خطأ.
