@@ -42,7 +42,7 @@ public class TaskSyncService extends Service
     public IBinder onBind(Intent intent) {
         return null; // We are using a Started Service, not a Bound Service
     }
-
+    //.
 }
 
 
