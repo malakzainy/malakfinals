@@ -16,7 +16,7 @@ public class Plant {
 
     @PrimaryKey //مفتاح رئيسي مع قيم تلقائية
     @NonNull
-    private String plantId;//
+    private String plantId;//Id للنبته
 
     private String title;// عنوان اسم النبتة
     private String description;// معطيات معلومات عن النبته

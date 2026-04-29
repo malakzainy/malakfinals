@@ -21,10 +21,19 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
+    /** يعرض رسالة الترحيب على الشاشة. */
     private TextView tvWelcome;
+
+    /** يعرض النص الفرعي أسفل رسالة الترحيب. */
     private TextView tvSubtitle;
+
+    /** يمثل حقل أو نص البريد الإلكتروني. */
     private TextView Email;
+
+    /** يمثل حقل أو نص كلمة المرور. */
     private TextView Pass;
+
+    /** يمثل خيار أو زر إنشاء حساب جديد. */
     private TextView tvSignUp;
     private EditText etMail1;  // ادخال الايميل
     private EditText etPass;// ادخال كلمة السر

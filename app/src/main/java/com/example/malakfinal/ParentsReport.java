@@ -78,8 +78,7 @@ public class ParentsReport extends AppCompatActivity {
     /** زر حفظ التقرير */
     private Button btnSave;
 
-    /** زر مسح / الانتقال لشاشة أخرى */
-    private Button btnTree;
+
 
     /**
      * دالة onCreate
@@ -122,29 +121,12 @@ public class ParentsReport extends AppCompatActivity {
         PeakFlow = findViewById(R.id.PeakFlow);
         etPeakFlow = findViewById(R.id.etPeakFlow);
         btnSave = findViewById(R.id.btnSave);
-        btnTree = findViewById(R.id.btnTree);
 
 
-        /**
-         * حدث زر Clear
-         *
-         * عند الضغط على الزر يتم الانتقال
-         * إلى شاشة PlantScan.
-         */
-
-        // زر الانتقال إلى صفحة التسجيل
-        // View v ->
-        //لما ينضغط الزر، رح ينادي دالة ويمرر فيها الزر نفسه كمتغير اسمه v
-        //View: هاي نوع البيانات (Data Type)
-        //بـ Android، أي زر أو عنصر على الشاشة هو كائن من نوع View
-        //يعني الزر نفسه يعتبر View.
-        //v: هذا اسم المتغير (Variable name)
-        //هو بيمثل الزر اللي انضغط عليه.
-        btnTree.setOnClickListener(v -> {
-            Intent intent = new Intent(ParentsReport.this, AddPlantActivity.class);
-            startActivity(intent);
 
 
-        });
+
+
+        };
     }
-}
+

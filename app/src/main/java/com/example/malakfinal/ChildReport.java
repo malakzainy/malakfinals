@@ -89,7 +89,7 @@ public class ChildReport extends AppCompatActivity {
     /** زر حفظ التقرير */
     private Button btnSave;
 
-    /** زر مسح البيانات */
+    /** زر للانتقال الى شاشة التصوير*/
     private Button btnTree;
 
     /**

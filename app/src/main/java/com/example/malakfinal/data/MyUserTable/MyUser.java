@@ -8,12 +8,12 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "users")
 public class MyUser {
 
-    @PrimaryKey
+    @PrimaryKey //مفتاح رئيسي
     @NonNull
-    private String userId;
+    private String userId;//ال Id للمستخدم
 
     @ColumnInfo(name = "full_name")
-    private String fullName;
+    private String fullName;//الاسم الكامل
 
     @ColumnInfo(name = "email")
     private String email;// الايميل

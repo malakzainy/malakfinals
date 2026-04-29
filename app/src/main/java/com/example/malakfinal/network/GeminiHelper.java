@@ -22,7 +22,16 @@ public class GeminiHelper {
     public static final String GEMINI_Version = "gemini-2.0-flash";    // ‏إصدار ال gemini الذي يمكن استعماله
     private static String GEMINI_API_KEY = "YOUR_API_KEY";   // مفتاح التطبيق الذي نسخه من الموقع التابع gemini
     private static GeminiHelper instance;    // كائن وحيد الذي يساعدنا على عدم بناء أكثر من كائن لهذه الخدمة ويسمى singleton
+    /**
+     * كائن يمثل نموذج Gemini ويُستخدم لإرسال الطلبات
+     * واستقبال الردود بشكل غير متزامن.
+     */
     private GenerativeModelFutures gemini;
+
+    /**
+     * مسؤول عن تشغيل المهام في الخلفية بخيط واحد
+     * حتى لا تتوقف واجهة المستخدم.
+     */
     private final Executor executor = Executors.newSingleThreadExecutor();
 
     // دالة بنائيه لبناء الموديل التابع gemini
