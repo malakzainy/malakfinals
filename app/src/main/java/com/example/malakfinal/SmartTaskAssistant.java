@@ -41,6 +41,9 @@ public class SmartTaskAssistant extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_smart_task_assistant);
+        EdgeToEdge.enable(this);
         etPlantTopic= findViewById(R.id.etPlantTopic);
         btnSuggestSteps= findViewById(R.id.btnSuggestSteps);
         pbLoading= findViewById(R.id.pbLoading);
@@ -56,8 +59,7 @@ public class SmartTaskAssistant extends AppCompatActivity {
         model = GenerativeModelFutures.from(ai);
 
 
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_smart_task_assistant);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
