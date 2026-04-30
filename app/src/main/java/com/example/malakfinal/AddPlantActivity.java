@@ -84,6 +84,7 @@ public class AddPlantActivity extends AppCompatActivity {
     private ImageView ivSelectedImage; //صفة كمؤشر لهذا الكائن
     private Uri selectedImageUri=null;//صفة لحفظ عنوان الصورة بعد اختيارها
     private ActivityResultLauncher<String> pickImage;// ‏كائن لطلب الصورة من الهاتف
+    private Button btnAi;
 
     /**
      * تُستدعى هذه الدالة عند إنشاء الصفحة.
@@ -101,22 +102,30 @@ public class AddPlantActivity extends AppCompatActivity {
         // * يفعّل وضع Edge-to-Edge للـ Activity الحالي لتمديد المحتوى أسفل أشرطة النظام.
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_plant); //مسؤول عن ربط ملف التصميم xml بكود java الخاص بالنشاط
+        titleEditText = findViewById(R.id.title); //  البحث عن العنصر الذي يحمل المعرفID المسمى title في ملف التصميم وربطه بالمتغير البرمجي  titleEditText
+        descriptionEditText = findViewById(R.id.description);
+        save = findViewById(R.id.save);
+        btnSetReminder = findViewById(R.id.btnSetReminder);
+        tvReminderTime = findViewById(R.id.tvReminderTime);
+        ivSelectedImage = findViewById(R.id.ivPlantImage);
+        btnAi = findViewById(R.id.btnAi);
+
+        btnAi.setOnClickListener(view -> {
+            // Navigate to SmartTaskAssistant activity
+            Intent intent = new Intent(AddPlantActivity.this, SmartTaskAssistant.class);
+            startActivity(intent);
+        });
 
 
 
 
-        //مش متاكده اذا لازم احطها بهاي الشاشة
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
             }
         }
-
-
-
-
-
 
         // تسجيل مُشغّل لطلب إذن READ_MEDIA_IMAGES
         requestReadMediaImagesPermission = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -201,11 +210,7 @@ public class AddPlantActivity extends AppCompatActivity {
             return insets;
         });
 
-         titleEditText = findViewById(R.id.title); //  البحث عن العنصر الذي يحمل المعرفID المسمى title في ملف التصميم وربطه بالمتغير البرمجي  titleEditText
-         descriptionEditText = findViewById(R.id.description);
-        save = findViewById(R.id.save);
-        btnSetReminder = findViewById(R.id.btnSetReminder);
-        tvReminderTime = findViewById(R.id.tvReminderTime);
+
 
 
 
@@ -412,14 +417,14 @@ public class AddPlantActivity extends AppCompatActivity {
                         addPlantToRoom();
                         scheduleAlarm(plant,selectedReminderTime);
 
-                        Toast.makeText(AddPlantActivity.this, "Succeeded to add User", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddPlantActivity.this, "Succeeded to add Plant", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AddPlantActivity.this, ScanResult.class));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddPlantActivity.this, "Failed to add User", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddPlantActivity.this, "Failed to add Plant", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -483,7 +488,6 @@ public class AddPlantActivity extends AppCompatActivity {
             }
         }
     }
-
 }
 // @Override
 //@Override هي Annotation (تعليمة توضيحية) بنحطها فوق دالة لما نكون عم نعيد تعريف (Override) دالة موجودة أصلاً في كلاس أب (Superclass) أو Interface.

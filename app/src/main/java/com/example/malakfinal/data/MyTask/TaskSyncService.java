@@ -16,19 +16,19 @@ public class TaskSyncService extends Service
     public int onStartCommand(Intent intent, int flags, int startId) {
         //read the data that received within the intent
         if (intent != null && intent.hasExtra("task_extra")) {
-           MyPlantQuery task = (MyPlantQuery) intent.getSerializableExtra("task_extra");
-            saveMyTaskToFirebase((MyPlantQuery) task);
+          Plant p = (Plant) intent.getSerializableExtra("task_extra");
+            saveMyTaskToFirebase((Plant) p);
         }
         // START_NOT_STICKY means if the system kills the service, don't recreate it automatically
         return START_NOT_STICKY;
     }
-    private void saveMyTaskToFirebase(MyPlantQuery task) {
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("tasks");
+    private void saveMyTaskToFirebase(Plant p) {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("plants");
         String key = myRef.push().getKey();
-        task.setKey(key);
+        p.setKey(key);
 
 
-        myRef.child(key).setValue(task).addOnCompleteListener(fbTask -> {
+        myRef.child(key).setValue(p).addOnCompleteListener(fbTask -> {
             if (fbTask.isSuccessful()) {
                 // In a service, use context from getApplicationContext() for Toasts
                 Toast.makeText(getApplicationContext(), "Sync Successful", Toast.LENGTH_SHORT).show();
@@ -42,7 +42,6 @@ public class TaskSyncService extends Service
     public IBinder onBind(Intent intent) {
         return null; // We are using a Started Service, not a Bound Service
     }
-    //.
 }
 
 

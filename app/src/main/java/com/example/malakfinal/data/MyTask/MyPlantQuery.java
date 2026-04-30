@@ -41,9 +41,6 @@ public interface MyPlantQuery {
     // ⚫ حذف جميع المهمات (اختياري)
     @Query("DELETE FROM Plant")
     void deleteAllTasks();
-    void setKey(String key);
-
-
 }
 // @Override
 //@Override هي Annotation (تعليمة توضيحية) بنحطها فوق دالة لما نكون عم نعيد تعريف (Override) دالة موجودة أصلاً في كلاس أب (Superclass) أو Interface.

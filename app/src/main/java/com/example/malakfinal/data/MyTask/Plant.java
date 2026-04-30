@@ -21,6 +21,7 @@ public class Plant {
     private String title;// عنوان اسم النبتة
     private String description;// معطيات معلومات عن النبته
     private String image;//صورة لنبته
+    private String key;
 
     public Plant()
     {}
@@ -62,6 +63,14 @@ public class Plant {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getKey() {
+        return key;
     }
 }
 // @Override

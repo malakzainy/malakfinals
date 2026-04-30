@@ -19,7 +19,7 @@ import com.example.malakfinal.data.MyUserTable.MyUserQuery;
 //تغيّر نوع بيانات
 //تضيف جدول جديد
 //يجب تغيير رقم الـ version.
-@Database(entities = {MyUser.class, AsthmaUser.class, Plant.class}, version = 3, exportSchema = false)
+@Database(entities = {MyUser.class, AsthmaUser.class, Plant.class}, version = 4, exportSchema = false)
 /**
  * الفئة المسؤولة عن بناء قاعدة البيانات بجدوالها
  * وتوفر لنا كائن للتعامل مع قاعدة البيانات
@@ -68,8 +68,6 @@ import com.example.malakfinal.data.MyUserTable.MyUserQuery;
             }
             return db;
         }
-
-
 }
 
 

@@ -55,31 +55,67 @@ public class GeminiHelper {
     /*** ‏هذه العملية تتلقى جملة لإ بإرسالها لخدمة الذكاء الاصطناعي Gemini وتنتظر الرد
      * @param prompt   Geminiجملة الاستعلام أو الطلب من الذكاء الاصطناعي
      * @param callback Gemini كائن لمعالجة الرد */
+    /**
+     * يقوم بإرسال رسالة (prompt) إلى نموذج Gemini واستقبال الرد بشكل غير متزامن (Asynchronous).
+     *
+     * يتم تحويل النص إلى كائن Content، ثم يتم إرسال الطلب باستخدام generateContent.
+     * النتيجة تُرجع عبر Callback:
+     * - onResponse: عند نجاح العملية
+     * - onError: عند حدوث خطأ
+     *
+     * @param prompt   النص الذي سيتم إرساله إلى النموذج
+     * @param callback كائن Callback للتعامل مع النتيجة أو الخطأ
+     */
     public void sendMessage(String prompt, ResponseCallback callback) {
-        // Create a Content object with the prompt
-        com.google.ai.client.generativeai.type.Content content = new com.google.ai.client.generativeai.type.Content.Builder()
-                .addText(prompt)
-                .build();
-                
+
+        // إنشاء كائن Content يحتوي على النص المُدخل (prompt)
+        com.google.ai.client.generativeai.type.Content content =
+                new com.google.ai.client.generativeai.type.Content.Builder()
+                        .addText(prompt)
+                        .build();
+
+        // إرسال الطلب إلى Gemini واستلام النتيجة كـ Future (عملية غير متزامنة)
         ListenableFuture<GenerateContentResponse> response = gemini.generateContent(content);
+
+        // إضافة Callback للتعامل مع نتيجة العملية عند اكتمالها
         Futures.addCallback(response, new FutureCallback<GenerateContentResponse>() {
+
+            /**
+             * يتم استدعاؤها عند نجاح الطلب
+             *
+             * @param result نتيجة الاستجابة من النموذج
+             */
             @Override
             public void onSuccess(GenerateContentResponse result) {
+
+                // التحقق من أن النتيجة ليست null
                 if (result != null) {
                     try {
+                        // إرسال النص الناتج إلى الـ callback
                         callback.onResponse(result.getText());
+
                     } catch (InvalidStateException e) {
+                        // في حال حدث خطأ أثناء قراءة النتيجة
                         callback.onError(e);
                     }
+
                 } else {
+                    // في حال كانت النتيجة فارغة
                     callback.onError(new Throwable("Response is null"));
                 }
             }
 
+            /**
+             * يتم استدعاؤها عند فشل الطلب
+             *
+             * @param t الخطأ الذي حدث أثناء التنفيذ
+             */
             @Override
             public void onFailure(Throwable t) {
+                // تمرير الخطأ إلى الـ callback
                 callback.onError(t);
             }
-        }, executor);
+
+        }, executor); // executor مسؤول عن تشغيل الـ callback في thread مناسب
     }
 }

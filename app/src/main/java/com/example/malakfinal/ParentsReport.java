@@ -122,11 +122,6 @@ public class ParentsReport extends AppCompatActivity {
         etPeakFlow = findViewById(R.id.etPeakFlow);
         btnSave = findViewById(R.id.btnSave);
 
-
-
-
-
-
         };
     }
 
