@@ -27,18 +27,45 @@ import com.google.common.util.concurrent.ListenableFuture;
 import java.util.concurrent.Executor;
 
 public class SmartTaskAssistant extends AppCompatActivity {
+    /**
+     * كائن مساعد للتعامل مع Gemini API
+     */
     private GeminiHelper geminiHelper;
-    private TextView tvSmartTask;
-    private EditText etPlantTopic;
-    private Button btnSuggestSteps;
-    private ProgressBar pbLoading;
-    private TextView tvAiResponse;
-    private GenerativeModelFutures model;
 
+    /**
+     * TextView لعرض عنوان أو وصف المهمة الذكية
+     */
+    private TextView tvSmartTask;
+
+    /**
+     * EditText لإدخال موضوع المهمة من قبل المستخدم
+     */
+    private EditText etPlantTopic;
+
+    /**
+     * زر لطلب اقتراح خطوات من الذكاء الاصطناعي
+     */
+    private Button btnSuggestSteps;
+
+    /**
+     * شريط تحميل يظهر أثناء معالجة الطلب
+     */
+    private ProgressBar pbLoading;
+
+    /**
+     * TextView لعرض رد الذكاء الاصطناعي
+     */
+    private TextView tvAiResponse;
+
+    /**
+     * كائن يمثل نموذج Gemini المستخدم لإرسال الطلبات
+     */
+    private GenerativeModelFutures model;
 
 
     @SuppressLint("MissingInflatedId")
     @Override
+    // SmartTaskAssistant זימון למחלקת
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

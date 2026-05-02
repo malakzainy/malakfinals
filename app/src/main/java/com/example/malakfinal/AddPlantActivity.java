@@ -37,7 +37,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.malakfinal.data.AppDataBase;
-import com.example.malakfinal.data.MyTask.MyPlantAdapter;
 import com.example.malakfinal.data.MyTask.Plant;
 import com.example.malakfinal.data.TaskReminderReceiver;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -84,7 +83,7 @@ public class AddPlantActivity extends AppCompatActivity {
     private ImageView ivSelectedImage; //صفة كمؤشر لهذا الكائن
     private Uri selectedImageUri=null;//صفة لحفظ عنوان الصورة بعد اختيارها
     private ActivityResultLauncher<String> pickImage;// ‏كائن لطلب الصورة من الهاتف
-    private Button btnAi;
+    private Button btnAi; //زر الانتقال الى شاشه smart task assistant
 
     /**
      * تُستدعى هذه الدالة عند إنشاء الصفحة.
@@ -115,8 +114,6 @@ public class AddPlantActivity extends AppCompatActivity {
             Intent intent = new Intent(AddPlantActivity.this, SmartTaskAssistant.class);
             startActivity(intent);
         });
-
-
 
 
 
