@@ -110,8 +110,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * التحقق من الحقول فقط (Validation)
-     */
+     *      * التحقق من الحقول فقط (Validation)
+     *      */
     //LoginActivity זימון למחלקת
     public boolean readAndValidateFields() {
 

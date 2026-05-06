@@ -458,6 +458,9 @@ public class AddPlantActivity extends AppCompatActivity {
         //استدعاء إجراء عند النقر على زر btnSetReminder
 
     }
+    //وظيفة هذه الدالة هي إعداد وتفعيل منبه (Alarm) باستخدام نظام الأندرويد (AlarmManager).
+    // عند حلول الوقت المحدد، تقوم الدالة بإرسال "بث" (Broadcast) إلى كلاس يُسمى
+    // TaskReminderReceiver ليقوم بإظهار إشعار للمستخدم، وهي تدعم التوافق مع إصدارات أندرويد المختلفة.
     // AddPlantActivity זימון למחלקת
     private void scheduleAlarm(Plant plant, Long time) {
         if(time==-1)return;//stop

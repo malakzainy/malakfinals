@@ -68,7 +68,8 @@ public class SignUp extends AppCompatActivity {
             validateAndSignUp();
         });
     }
-    //SignUp זימון למחלקת
+    //وظيفتها الأساسية هي التأكد من أن المستخدم أدخل بيانات منطقية وصحيحة في الحقول (مثل الاسم، البريد، وكلمة المرور) قبل إرسال هذه البيانات إلى قاعدة البيانات (مثل Firebase أو SQLite).
+    // SignUp זימון למחלקת
     private void validateAndSignUp() {
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
