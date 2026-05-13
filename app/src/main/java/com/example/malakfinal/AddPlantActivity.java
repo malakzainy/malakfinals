@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,16 @@ import com.example.malakfinal.data.MyTask.Plant;
 import com.example.malakfinal.data.TaskReminderReceiver;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.firebase.ai.FirebaseAI;
+import com.google.firebase.ai.GenerativeModel;
+import com.google.firebase.ai.java.GenerativeModelFutures;
+import com.google.firebase.ai.type.Content;
+import com.google.firebase.ai.type.GenerateContentResponse;
+import com.google.firebase.ai.type.GenerativeBackend;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -48,6 +59,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Calendar;
+import java.util.concurrent.Executor;
 
 /**
  * AddPlantActivity هي شاشة تُستخدم لإضافة نبات جديد إلى قاعدة البيانات.
@@ -84,6 +96,8 @@ public class AddPlantActivity extends AppCompatActivity {
     private Uri selectedImageUri=null;//صفة لحفظ عنوان الصورة بعد اختيارها
     private ActivityResultLauncher<String> pickImage;// ‏كائن لطلب الصورة من الهاتف
     private Button btnAi; //زر الانتقال الى شاشه smart task assistant
+    private ProgressBar pbLoading;
+    private TextView tvAiResponse;
 
     /**
      * تُستدعى هذه الدالة عند إنشاء الصفحة.
@@ -108,14 +122,15 @@ public class AddPlantActivity extends AppCompatActivity {
         tvReminderTime = findViewById(R.id.tvReminderTime);
         ivSelectedImage = findViewById(R.id.ivPlantImage);
         btnAi = findViewById(R.id.btnAi);
+        pbLoading = findViewById(R.id.pbLoading);
+        tvAiResponse = findViewById(R.id.tvAiResponse);
 
         btnAi.setOnClickListener(view -> {
             // Navigate to SmartTaskAssistant activity
-            Intent intent = new Intent(AddPlantActivity.this, SmartTaskAssistant.class);
-            startActivity(intent);
+//            Intent intent = new Intent(AddPlantActivity.this, SmartTaskAssistant.class);
+//            startActivity(intent);
+            askFirebaseAiGeminiForSteps();
         });
-
-
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -209,9 +224,6 @@ public class AddPlantActivity extends AppCompatActivity {
 
 
 
-
-
-
         save.setOnClickListener(new View.OnClickListener() { //واجهة تطبيف interface معالج حدث clickلا يمكن بناء كائن منه
             @Override
             public void onClick(View view) {
@@ -286,9 +298,6 @@ public class AddPlantActivity extends AppCompatActivity {
             }
         }// ملاحظة: إذن INTERNET لا يحتاج إلى فحص أو
     }
-
-
-
 
 
     /**
@@ -400,7 +409,9 @@ public class AddPlantActivity extends AppCompatActivity {
          * أو حذف بيانات النباتات داخل قاعدة البيانات.
          */
         // شرح الاستاذ: مؤشر لجدول المستعملين
-        DatabaseReference plantsRef = database.child("plants");
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference plantsRef = database.child("plants").child(uid);
+
         // انشاء مفتاح فريد للمستخدم لجديد
         DatabaseReference newPlantRef = plantsRef.push();
         // تعيين معرف المستخدم في كائن Plant
@@ -445,7 +456,7 @@ public class AddPlantActivity extends AppCompatActivity {
         new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {//אירוע בחירת הזמן
             date.set(year, monthOfYear, dayOfMonth);
             new TimePickerDialog(this, (view1, hourOfDay, minute) -> {
-                date.set(Calendar.HOUR_OF_DAY, hourOfDay);//הזמן שנבחר
+                date.set(Calendar.HOUR_OF_DAY, hourOfDay);//הזמן שנبחר
                 date.set(Calendar.MINUTE, minute);
                 date.set(Calendar.SECOND, 0);
                 selectedReminderTime = date.getTimeInMillis();// הזמן שנבחר במלישניות
@@ -487,6 +498,67 @@ public class AddPlantActivity extends AppCompatActivity {
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
             }
         }
+    }
+
+
+    private void askFirebaseAiGeminiForSteps() {
+        if (selectedImageUri == null) {
+            Toast.makeText(this, "Please select an image first", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        GenerativeModel ai = FirebaseAI.getInstance(GenerativeBackend.googleAI())
+                .generativeModel("gemini-3-flash-preview");
+
+
+// Use the GenerativeModelFutures Java compatibility layer which offers
+// support for ListenableFuture and Publisher APIs
+        GenerativeModelFutures model = GenerativeModelFutures.from(ai);
+
+        pbLoading.setVisibility(View.VISIBLE);
+        tvAiResponse.setText("");
+        btnAi.setEnabled(false);
+
+
+
+        String promptStr = "Identify the plant in this image. Is this plant known to be allergenic to humans or pets? " +
+                "Please provide plant as the first word or line followed by a clear 'Yes' or 'No' as the first response word then the next line   by a brief explanation of the types of " +
+                "allergic reactions it might cause (like skin irritation, hay fever, or toxicity if ingested) " +
+                "The user mentioned: " ;
+
+
+        InputStream in = null;
+        try {
+            in = getContentResolver().openInputStream(selectedImageUri);
+        } catch (FileNotFoundException e) {
+            
+            throw new RuntimeException(e);
+        }
+        Content prompt = new Content.Builder()
+                .addText(promptStr)
+                .addImage(BitmapFactory.decodeStream(in))
+                .build();
+
+
+        ListenableFuture<GenerateContentResponse> response = model.generateContent(prompt);
+        Executor executor = this::runOnUiThread;
+        Futures.addCallback(response, new FutureCallback<GenerateContentResponse>() {
+            @Override
+            public void onSuccess(GenerateContentResponse result) {
+                pbLoading.setVisibility(View.GONE);
+                btnAi.setEnabled(true);
+                tvAiResponse.setText(result.getText());
+                descriptionEditText.append("\n"+result.getText());
+            }
+
+
+            @Override
+            public void onFailure(Throwable t) {
+                pbLoading.setVisibility(View.GONE);
+                btnAi.setEnabled(true);
+                Toast.makeText(getBaseContext(), "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }, executor);
     }
 }
 // @Override

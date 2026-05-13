@@ -81,5 +81,22 @@
             android:layout_height="wrap_content"
             android:text="Ai" />
 
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/tvAiResponse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="8dp"
+            android:background="#F5F5F5"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"/>
+
     </LinearLayout>
 </ScrollView>

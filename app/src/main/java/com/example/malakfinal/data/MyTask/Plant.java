@@ -14,8 +14,9 @@ import androidx.room.PrimaryKey;
 //@Id ➜ تحدد المفتاح الأساسي (Primary Key).
 public class Plant {
 
-    @PrimaryKey //مفتاح رئيسي مع قيم تلقائية
+    @PrimaryKey(autoGenerate = true) //مفتاح رئيسي مع قيم تلقائية
     @NonNull
+    public long id;
     private String plantId;//Id للنبته
 
     private String title;// عنوان اسم النبتة
@@ -71,6 +72,14 @@ public class Plant {
 
     public String getKey() {
         return key;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
 // @Override

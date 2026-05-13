@@ -16,13 +16,17 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.malakfinal.network.GeminiHelper;
-import com.google.ai.client.generativeai.GenerativeModel;
-import com.google.ai.client.generativeai.java.GenerativeModelFutures;
-import com.google.ai.client.generativeai.type.Content;
-import com.google.ai.client.generativeai.type.GenerateContentResponse;
+
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.firebase.ai.FirebaseAI;
+import com.google.firebase.ai.type.Content;
+import com.google.firebase.ai.type.GenerateContentResponse;
+
+import com.google.firebase.ai.GenerativeModel;
+import com.google.firebase.ai.java.GenerativeModelFutures;
+import com.google.firebase.ai.type.GenerativeBackend;
 
 import java.util.concurrent.Executor;
 
@@ -79,11 +83,7 @@ public class SmartTaskAssistant extends AppCompatActivity {
         // Initialize the Gemini Developer API backend service
         // Create a `GenerativeModel` instance with a model that supports your use case
         String apiKey = "YOUR_API_KEY"; // Replace with your actual API key
-        GenerativeModel ai = new GenerativeModel("gemini-2.0-flash", apiKey);
 
-        // Use the GenerativeModelFutures Java compatibility layer which offers
-        // support for ListenableFuture and Publisher APIs
-        model = GenerativeModelFutures.from(ai);
 
 
 
@@ -99,6 +99,14 @@ public class SmartTaskAssistant extends AppCompatActivity {
      * @param topic
      */
     private void askFirebaseAiGeminiForSteps(String topic) {
+        GenerativeModel ai = FirebaseAI.getInstance(GenerativeBackend.googleAI())
+                .generativeModel("gemini-3-flash-preview");
+
+
+// Use the GenerativeModelFutures Java compatibility layer which offers
+// support for ListenableFuture and Publisher APIs
+        model = GenerativeModelFutures.from(ai);
+
         pbLoading.setVisibility(View.VISIBLE);
         tvAiResponse.setText("");
         btnSuggestSteps.setEnabled(false);

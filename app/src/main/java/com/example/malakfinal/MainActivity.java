@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -19,7 +21,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.malakfinal.data.AppDataBase;
 import com.example.malakfinal.data.MyTask.MyPlantAdapter;
+import com.example.malakfinal.data.MyTask.Plant;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -85,11 +94,19 @@ public class MainActivity extends AppCompatActivity {
     //MainActivity זימון למחלקת
     protected void onResume() { // تتنفذ دائما عند فتح هذه الشاشة
         super.onResume();
+        //تنظيف المنسق من جميع المعطيات السابقه
         adapter.clear();
-        adapter.addAll(AppDataBase.getDB(this).getMyPlantQuery().getAllPlants());
+        //اضافة المعطيات الجديدة
+      //  adapter.addAll(AppDataBase.getDB(this).getMyPlantQuery().getAllPlants());
+        getAllFromFirebase(adapter);
+        //تحديث المنسق
         adapter.notifyDataSetChanged();
+
     }
-    //بعرفش اذا محلها صح notification
+    //
+
+
+    // notification
     //طلب اذن الاشعارات
 
     private final ActivityResultLauncher<String> requestNotificationPermissionLauncher = registerForActivityResult( new ActivityResultContracts.RequestPermission(),
@@ -99,6 +116,40 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
     );
+
+    private void getAllFromFirebase(MyPlantAdapter adapter) {
+        //عنوان قاعدة البيانات
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        // عنوان مجموعة المعطيات داخل قاعدة البيانات
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        DatabaseReference myRef = database.getReference("plants").child(uid);
+//إضافة listener مما يسبب الإصغاء لكل تغيير حتلنة عرض المعطيات//
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override//دالة معالج حدث تقوم بتلقى نسخة عن كل المعطيات عند أي تغيير
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                adapter.clear();//حذف كل المعطيات بالوسيط
+                for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
+                    //  استخراج كل المعطيات على وتحويلها لكائن ملائم//
+                    Plant plant = taskSnapshot.getValue(Plant.class);
+                    adapter.add(plant);
+                }
+                adapter.notifyDataSetChanged();
+                Toast.makeText(MainActivity.this, "Data fetched successfully", Toast.LENGTH_SHORT).show();
+
+
+            }
+
+
+            @Override//بحالة فشل استخراج المعطيات
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MainActivity.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    //
+
+
 
 }
 
