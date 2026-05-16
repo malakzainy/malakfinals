@@ -34,6 +34,10 @@ public class SignUp extends AppCompatActivity {
     private EditText etConfirmPassword; // التاكيد على كلمة السر
     private Button btnRegister; // زر الانتقال الى الصفحه التانيه
 
+    // //تتيح هذه الشاشة للمستخدمين الذين يمتلكون حساباً مسبقاً تسجيل الدخول إلى التطبيق
+    //    // عن طريق إدخال البريد الإلكتروني وكلمة المرور. تقوم الشاشة بفحص البيانات المدخلة محلياً،
+    //    // ثم ترسلها إلى Firebase Authentication للتحقق من صحتها،
+    //    // وفي حال النجاح تنقل المستخدم إلى شاشة اختيار الدور (RoleSelection)
     // 🔥 Firebase
     private FirebaseAuth auth;
 
@@ -68,7 +72,8 @@ public class SignUp extends AppCompatActivity {
             validateAndSignUp();
         });
     }
-    //وظيفتها الأساسية هي التأكد من أن المستخدم أدخل بيانات منطقية وصحيحة في الحقول (مثل الاسم، البريد، وكلمة المرور) قبل إرسال هذه البيانات إلى قاعدة البيانات (مثل Firebase أو SQLite).
+    //وظيفتها الأساسية هي التأكد من أن المستخدم أدخل بيانات منطقية وصحيحة في الحقول
+    // (مثل الاسم، البريد، وكلمة المرور) قبل إرسال هذه البيانات إلى قاعدة البيانات (مثل Firebase أو SQLite).
     // SignUp זימון למחלקת
     private void validateAndSignUp() {
         String name = etName.getText().toString().trim();
@@ -99,6 +104,10 @@ public class SignUp extends AppCompatActivity {
             return;
         }
 
+        //هنا بتطلب من كائن الـ auth
+        // (وهو نسخة من Firebase Auth) إنه ينشئ حساب جديد باستخدام البريد الإلكتروني
+        // (email) وكلمة المرور (password) اللي دخلهم المستخدم.
+
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -106,7 +115,14 @@ public class SignUp extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Firebase user created successfully, now save to local database
+                            //هذه الدالة بتروح تسأل كائن الـ Firebase Auth:
+                            // "يا فايربيز، هل في مستخدم حالياً مسجل دخوله في التطبيق؟"
                             FirebaseUser firebaseUser = auth.getCurrentUser();
+
+                            //هنا الكود بيجيب بيانات المستخدم اللي سجل حالاً من الـ Firebase عشان يأخذ الـ Uid (المعرف الفريد الخاص فيه)،
+                            // وبعدين بيستدعي دالة عندك اسمها saveUserToLocalStorage عشان يخزن بياناته
+                            // (الـ ID، الاسم، والإيميل) في قاعدة بيانات محلية على الجهاز
+
                             if (firebaseUser != null) {
                                 saveUserToLocalStorage(firebaseUser.getUid(), name, email);
                             }

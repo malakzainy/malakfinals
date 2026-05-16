@@ -61,10 +61,15 @@ public class SplashScreen extends AppCompatActivity {
      *
      * @param savedInstanceState الحالة المحفوظة سابقًا للنشاط (إن وُجدت)
      */
+      //كلمة Lint في أندرويد ستوديو هي أداة ذكية تقوم بفحص الكود وتنبيهك إذا كان هناك احتمالية لوجود خطأ أو تحذير (Warning)، وتضع تحت الكود خطاً أصفر أو أحمر.
+    //عندما تكتب @SuppressLint، أنت تقول للبرنامج: "أنا أعلم ماذا أفعل، من فضلك تجاهل هذا التحذير ولا تظهره لي".
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     //זימון למחלקת MainActivity
+    //تتنفذ مره واحدة عند فتح هذه الشاشه
     protected void onCreate(Bundle savedInstanceState) {
+        //كلمة super في لغة الجافا تُستخدم لاستدعاء الدالة من الفئة الأم (Parent Class / Superclass).
+        //، الشاشة SplashScreen ترث (extends) من الفئة الأم AppCompatActivity.
         super.onCreate(savedInstanceState);
 
         /**
@@ -85,6 +90,10 @@ public class SplashScreen extends AppCompatActivity {
         /**
          * ضبط هوامش الواجهة تلقائيًا حسب أشرطة النظام.
          */
+          //"هذا الكود مرتبط بميزة الـ Edge-to-Edge.
+        // وظيفته هي حساب أبعاد أشرطة النظام (مثل شريط الحالة العلوي وشريط التنقل السفلي) وتطبيقها كـ Padding (هوامش داخلية) على الحاوية الرئيسية للتطبيق.
+        // هذا يضمن عدم تداخل أزرار ونصوص التطبيق مع عناصر النظام أو النوتش (Notch) الخاص بالهاتف،
+        // مما يجعل التصميم متناسقاً على جميع أنواع الشاشات."
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -112,9 +121,15 @@ public class SplashScreen extends AppCompatActivity {
          */
         new Handler().postDelayed(new Runnable() {
             @Override
+            //الدالة run() تابعة لواجهة الـ Runnable المفعلة داخل الـ Handler.
+            // وظيفتها البرمجية هي احتواء الأوامر التي نريد تنفيذها
+            // بعد انتهاء وقت الانتظار (الـ Delay) المحدد بـ 3 ثوانٍ
             public void run() {
+                // 1. تحديد خط السير (من شاشة السبراش إلى شاشة تسجيل الدخول)
                 Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+                // 2. أمر الانتقال الفعلي وتشغيل الشاشة الجديدة
                 startActivity(intent);
+                // 3. إنهاء وإغلاق الشاشة الحالية من الذاكرة
                 finish();
             }
         }, 3000);

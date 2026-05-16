@@ -426,7 +426,6 @@ public class AddPlantActivity extends AppCompatActivity {
                         scheduleAlarm(plant,selectedReminderTime);
 
                         Toast.makeText(AddPlantActivity.this, "Succeeded to add Plant", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AddPlantActivity.this, ScanResult.class));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

@@ -152,6 +152,8 @@ public class ChildReport extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
         // read and validate all fields
         String name = etName.getText().toString().trim();
         if (name.isEmpty()) {
