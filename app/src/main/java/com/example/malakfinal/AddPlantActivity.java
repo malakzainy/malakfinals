@@ -97,7 +97,7 @@ public class AddPlantActivity extends AppCompatActivity {
     private ActivityResultLauncher<String> pickImage;// ‏كائن لطلب الصورة من الهاتف
     private Button btnAi; //زر الانتقال الى شاشه smart task assistant
     private ProgressBar pbLoading;
-    private TextView tvAiResponse;
+    private TextView tvAiResponse;//Aiالمكان الذي يعرض به جواب ال
 
     /**
      * تُستدعى هذه الدالة عند إنشاء الصفحة.
@@ -126,9 +126,6 @@ public class AddPlantActivity extends AppCompatActivity {
         tvAiResponse = findViewById(R.id.tvAiResponse);
 
         btnAi.setOnClickListener(view -> {
-            // Navigate to SmartTaskAssistant activity
-//            Intent intent = new Intent(AddPlantActivity.this, SmartTaskAssistant.class);
-//            startActivity(intent);
             askFirebaseAiGeminiForSteps();
         });
 
@@ -239,9 +236,6 @@ public class AddPlantActivity extends AppCompatActivity {
                     // مسح حقول الادخال
                     titleEditText.setText("");
                     descriptionEditText.setText("");
-                //    plantIdEditText.setText("");
-//                    startActivity(new Intent(AddPlantActivity.this, ScanResult.class));
-//                    finish();
                 } else {
                     Toast.makeText(AddPlantActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 }
@@ -520,7 +514,7 @@ public class AddPlantActivity extends AppCompatActivity {
 
 
 
-        String promptStr = "Identify the plant in this image. Is this plant known to be allergenic to humans or pets? " +
+        String promptStr = "Identify the plant in this image. Is this plant known to be allergenic to humans that have an asthma ? " +
                 "Please provide plant as the first word or line followed by a clear 'Yes' or 'No' as the first response word then the next line   by a brief explanation of the types of " +
                 "allergic reactions it might cause (like skin irritation, hay fever, or toxicity if ingested) " +
                 "The user mentioned: " ;

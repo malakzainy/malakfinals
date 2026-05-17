@@ -235,7 +235,6 @@ public class ChildReport extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
 
                         Toast.makeText(ChildReport.this, "Succeeded to add User", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(ChildReport.this, ScanResult.class));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

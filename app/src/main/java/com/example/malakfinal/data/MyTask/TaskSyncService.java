@@ -41,6 +41,8 @@ public class TaskSyncService extends Service
     @Override
     public IBinder onBind(Intent intent) {
         return null; // We are using a Started Service, not a Bound Service
+        //دالة onBind إجبارية في أي Service. بما إنك مرجع null، هاد معناه إنك عم تستخدم نوع اسمه Started Service (خدمة بتبدأ وبتروح تعمل شغلها)
+        // Bound Service (خدمة برتبط فيها الـ Activity عشان يحكوا مع بعض).
     }
 }
 
