@@ -129,12 +129,20 @@ public class AddPlantActivity extends AppCompatActivity {
             askFirebaseAiGeminiForSteps();
         });
 
+        //التحقق مما إذا كان التطبيق يمتلك
+        // Notification إذنًا لإظهار الإشعارات للمكتب للمستخدم، وإذا لم يكن يمتلكه، يقوم بطلبه منه
+        // هذا الكود يحمي تطبيقك من الانهيار (Crash) أو العمل بشكل غير صحيح على الهواتف الحديثة
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
             }
         }
+        //إضافة الأذونات permissions הרשאות
+        // ‏لإختيار صورة أو ملف من الهاتف يجب طلب إذن
+        // من المستعمل لذلك علينا فحص  الأذونات  وطلب المصادقة عليها ان لم يكن هناك مصادقة
+        // تأكد من إضافة إذن
+        // ‏استخراج صورة أو فيلم في ملف AndroidManifest.xml
 
         // تسجيل مُشغّل لطلب إذن READ_MEDIA_IMAGES
         requestReadMediaImagesPermission = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -200,7 +208,7 @@ public class AddPlantActivity extends AppCompatActivity {
 
 
 
-//استدعاء دالة الفحص (سيتم تطبيقها لاحقا)
+//استدعاء دالة الفحص
         checkAndRequestPermissions();
 
 // * يضبط مستمع لتحديث المساحات (Insets) الخاصة بالنظام
@@ -227,10 +235,14 @@ public class AddPlantActivity extends AppCompatActivity {
                 if (validateFields()) {
                    // addPlant();
                     //استدعاء الداله
+                    //إنشاء كائن جديد من كلاس النبات
                     Plant P = new Plant();
+                    //تقوم بتخزين عنوان النبتة أو المهمة (مثل الاسم الذي كتبه المستخدم في الـ EditText).
                     P.setTitle(title);
+                    //تقوم بتخزين تفاصيل أو وصف هذه النبتة.
                     P.setDescription(description);
                     P.setImage(convertImageToString(selectedImageUri));
+                    //استدعاء دالة الحفظ
                     savePlants(P);
 
                     // مسح حقول الادخال
@@ -336,13 +348,37 @@ public class AddPlantActivity extends AppCompatActivity {
         String imageString = null;
         // تحتوي هذه الدالة على وظيفة تحويل الصورة من مكان التخزين المؤقت إلى نص بنموذج Base64 ليتم تخزينه في قاعدة البيانات، وهذا يتيح للبرنامج عرض الصورة من قاعدة البيانات في وقت لاحق بدون الحاجة إلى فتح الصورة من جهاز المستخدم.
         try {
+            //getContentResolver().openInputStream(uri): المسار (Uri) الذي حصلنا عليه من المعرض ليس صورة فعلية بل هو مجرد
+            // "رابط داخلي". هنا نستخدم الـ InputStream لفتح هذا الرابط وقراءة البيانات الخام (Bytes) الخاصة بالصورة.
+            //
+            //BitmapFactory.decodeStream(...): تقوم بتحويل هذه البيانات الخام إلى كائن من نوع Bitmap
+            // (وهو الصيغة التي يفهمها أندرويد للتعامل مع الصور وتعديلها)
+
             inputStream = getContentResolver().openInputStream(uri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             if (bitmap == null) {
                 Toast.makeText(this, "Failed to process image", Toast.LENGTH_SHORT).show();
                 return null;
             }
+            //شرح عن try-catch:
+            //الهدف التعامل مع أخطاء "زمن التشغيل" runtime error  وما يسمى بالاستثناء Exception:
+            //  try-catch   في البرمجة (وبالتحديد في جافا هنا) تُستخدم للتعامل مع
+            //  الأخطاء المتوقعة التي قد تحدث أثناء تشغيل البرنامج،
+            //  لضمان أن التطبيق لن "ينهار" أو يغلق فجأة في وجه المستخدم.
             // Compress image to keep Base64 string within reasonable limit
+
+
+            //الـ try (جرب):
+            //نضع داخلها الكود "الخطير" أو الذي قد يفشل لأسباب خارجة عن إرادة المبرمج وتسبب حدث  "زمن التشغيل" .
+            //مثلاً  : عندما تحاول فتح صورة من جهاز المستخدم (openInputStream(uri))،
+            // قد تكون الصورة قد حُذفت أو لا يملك التطبيق صلاحية الوصول إليها. هنا نضع هذا الكود داخل try.
+
+            //الـ catch (أمسك الخطأ):
+            //هذا هو "منقذ الحياة" أو خطة الطوارئ. إذا حدث خطأ داخل بلوك الـ try
+            // (يسمى إلقاء استثناء - Exception)، يتوقف تنفيذ الكود داخل الـ try فوراً وينتقل البرنامج إلى الـ catch.
+            //مثلاً: إذا لم يجد التطبيق الملف، سيقوم الـ catch بإظهار رسالة للمستخدم (Toast) تقول:
+            // "Failed file not found" بدلاً من أن يغلق التطبيق تماماً.
+
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
             byte[] imageBytes = outputStream.toByteArray();
@@ -411,7 +447,8 @@ public class AddPlantActivity extends AppCompatActivity {
         // تعيين معرف المستخدم في كائن Plant
         plant.setPlantId(newPlantRef.getKey());
         //حفظ بيانات المستخدم في قاعدة البيانات في قعدة البيانات
-        // اضافة كائن لمجموعة المستعملين ومعالج حدث لفحص نجاح المطلوب معالج حدث لفحص هل تم المطلوب من قاعدة البيانات
+        // اضافة كائن لمجموعة المستعملين ومعالج
+        // حدث لفحص نجاح المطلوب معالج حدث لفحص هل تم المطلوب من قاعدة البيانات
         plantsRef.child(plant.getPlantId()).setValue(plant)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -429,7 +466,7 @@ public class AddPlantActivity extends AppCompatActivity {
                     }
                 });
     }
-    //بعرفش اذا محلها صح notification
+
     //طلب اذن الاشعارات
 
     private final ActivityResultLauncher<String> requestNotificationPermissionLauncher = registerForActivityResult( new ActivityResultContracts.RequestPermission(),
@@ -449,7 +486,7 @@ public class AddPlantActivity extends AppCompatActivity {
         new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {//אירוע בחירת הזמן
             date.set(year, monthOfYear, dayOfMonth);
             new TimePickerDialog(this, (view1, hourOfDay, minute) -> {
-                date.set(Calendar.HOUR_OF_DAY, hourOfDay);//הזמן שנبחר
+                date.set(Calendar.HOUR_OF_DAY, hourOfDay);//הזמן שנחר
                 date.set(Calendar.MINUTE, minute);
                 date.set(Calendar.SECOND, 0);
                 selectedReminderTime = date.getTimeInMillis();// הזמן שנבחר במלישניות
@@ -482,12 +519,24 @@ public class AddPlantActivity extends AppCompatActivity {
         if (alarmManager != null) {
             //יוצרים לפי גרסת מערכת הטלפון
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                // فحص ما إذا كان التطبيق يملك إذن "جدولة المنبهات الدقيقة" من النظام
                 if (alarmManager.canScheduleExactAlarms()) {
+                    // إذا كان الإذن ممنوحاً: يتم تشغيل المنبه بأعلى دقة ممكنة
+                    // RTC_WAKEUP: تعني اعتمد على وقت الهاتف الفعلي وقُم بإيقاظ الجهاز إذا كان الشاشة مغلقة
+                    // time: الوقت المحدد بالملي ثانية الذي اخترناه من الـ Picker
+                    // pendingIntent: السهم البرمجي الذي سينطلق ليوقظ الـ BroadcastReceiver عند حلول الموعد
+                    // AllowWhileIdle: تشغيل المنبه حتى لو كان الهاتف في وضع توفير الطاقة العميق (Doze Mode)
                     alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+
                 } else {
+                    // إذا كان الإذن غير ممنوح (بسبب قيود أندرويد 12 الحديثة):
+                    // يتراجع الكود بذكاء ويستخدم الدالة العادية set لحماية التطبيق من الانهيار
+                    // ملاحظة: هنا قد يتأخر المنبه بضع دقائق لأن النظام يتحكم بوقت تشغيله للحفاظ على البطارية
                     alarmManager.set(AlarmManager.RTC_WAKEUP,time, pendingIntent);
                 }
             } else {
+                // إذا كان هاتف المستخدم قديمًا (أندرويد 11 أو أقل):
+                // هذه القيود لم تكن موجودة سابقاً، لذلك يتم تشغيل المنبه بدقة عالية وفوراً دون أي شروط إضافية
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
             }
         }
@@ -499,6 +548,11 @@ public class AddPlantActivity extends AppCompatActivity {
             Toast.makeText(this, "Please select an image first", Toast.LENGTH_SHORT).show();
             return;
         }
+        // إنشاء وتهيئة كائن الذكاء الاصطناعي (GenerativeModel) باستخدام مكتبة Firebase AI
+        // FirebaseAI.getInstance: جلب نسخة من مكتبة فايربيز الخاصة بالذكاء الاصطناعي
+        // GenerativeBackend.googleAI(): تحديد الواجهة الخلفية للاعتماد على محرك Google AI
+        // "gemini-3-flash-preview": تحديد اسم نموذج الذكاء الاصطناعي (Model) المراد استخدامه
+        // (وهو هنا نموذج Gemini 3 Flash السريع والممتاز لتحليل الصور والنصوص)
 
         GenerativeModel ai = FirebaseAI.getInstance(GenerativeBackend.googleAI())
                 .generativeModel("gemini-3-flash-preview");
@@ -506,6 +560,10 @@ public class AddPlantActivity extends AppCompatActivity {
 
 // Use the GenerativeModelFutures Java compatibility layer which offers
 // support for ListenableFuture and Publisher APIs
+// تحويل كائن الذكاء الاصطناعي (ai) العادي إلى كائن يدعم العمليات المستقبلية والخلفية (Futures)
+// مكتبة "GenerativeModelFutures" تُستخدم في جاوا (Java) للتعامل مع الـ Tasks غير المتزامنة (Asynchronous)
+// فائدتها: تضمن أن طلبات الذكاء الاصطناعي (مثل إرسال الصور وتحليلها) ستتم في الخلفية (Background Thread)
+// هذا يمنع تجمد واجهة التطبيق (UI Thread) أثناء انتظار رد سيرفرات قوقل جيميني
         GenerativeModelFutures model = GenerativeModelFutures.from(ai);
 
         pbLoading.setVisibility(View.VISIBLE);
@@ -519,39 +577,73 @@ public class AddPlantActivity extends AppCompatActivity {
                 "allergic reactions it might cause (like skin irritation, hay fever, or toxicity if ingested) " +
                 "The user mentioned: " ;
 
+//شرح عن try-catch:
+        //الهدف التعامل مع أخطاء "زمن التشغيل" runtime error  وما يسمى بالاستثناء Exception:
+        //  try-catch   في البرمجة (وبالتحديد في جافا هنا) تُستخدم للتعامل مع
+        //  الأخطاء المتوقعة التي قد تحدث أثناء تشغيل البرنامج،
+        //  لضمان أن التطبيق لن "ينهار" أو يغلق فجأة في وجه المستخدم.
+        // Compress image to keep Base64 string within reasonable limit
 
+
+        //الـ try (جرب):
+        //نضع داخلها الكود "الخطير" أو الذي قد يفشل لأسباب خارجة عن إرادة المبرمج وتسبب حدث  "زمن التشغيل" .
+        //مثلاً  : عندما تحاول فتح صورة من جهاز المستخدم (openInputStream(uri))،
+        // قد تكون الصورة قد حُذفت أو لا يملك التطبيق صلاحية الوصول إليها. هنا نضع هذا الكود داخل try.
+
+        //الـ catch (أمسك الخطأ):
+        //هذا هو "منقذ الحياة" أو خطة الطوارئ. إذا حدث خطأ داخل بلوك الـ try
+        // (يسمى إلقاء استثناء - Exception)، يتوقف تنفيذ الكود داخل الـ try فوراً وينتقل البرنامج إلى الـ catch.
+        //مثلاً: إذا لم يجد التطبيق الملف، سيقوم الـ catch بإظهار رسالة للمستخدم (Toast) تقول:
+        // "Failed file not found" بدلاً من أن يغلق التطبيق تماماً.
+
+        // تعريف متغير لقراءة ملف الصورة كتدفق بيانات خام (Input Stream)
         InputStream in = null;
         try {
+            // فتح مسار الصورة التي اختارها المستخدم وتحويلها إلى مجرى بيانات للقراءة
             in = getContentResolver().openInputStream(selectedImageUri);
         } catch (FileNotFoundException e) {
-            
+            // في حال لم يتم العثور على ملف الصورة (مثلاً لو حُذفت)، يتم إطلاق استثناء لإيقاف البرنامج وتنبيه المطور
             throw new RuntimeException(e);
         }
+
+        // بناء محتوى الطلب (Prompt) الموجه لذكاء جيميني الاصطناعي
+        // نستخدم Content.Builder لدمج النص والصورة معاً وإرسالهما في نفس الطلب
         Content prompt = new Content.Builder()
-                .addText(promptStr)
-                .addImage(BitmapFactory.decodeStream(in))
+                .addText(promptStr) // إضافة النص أو السؤال المكتوب (مثل: "ما هي هذه النبتة وكيف أعتني بها؟")
+                .addImage(BitmapFactory.decodeStream(in)) // تحويل مجرى بيانات الصورة إلى Bitmap وإضافتها للطلب
                 .build();
 
-
+        // إرسال الطلب (المكون من الصورة والنص) إلى نموذج Gemini في الخلفية
+        // الدالة تعيد كائن من نوع ListenableFuture، مما يعني أن النتيجة ستأتي مستقبلاً دون تجميد التطبيق
         ListenableFuture<GenerateContentResponse> response = model.generateContent(prompt);
+
+        // تحديد الـ Executor المسؤول عن تحديد أين سيتم تنفيذ كود النتيجة
+        // هنا اخترنا runOnUiThread للتأكد من أن النتيجة عندما تعود، سيتم التعامل معها على الواجهة الرئيسية (UI Thread) لتعديل النصوص والأزرار بأمان
         Executor executor = this::runOnUiThread;
+
+        // إضافة "مستمع" (Callback) لانتظار رد سيرفرات قوقل جيميني ومعالجة النتيجة
         Futures.addCallback(response, new FutureCallback<GenerateContentResponse>() {
+
+            // دالة النجاح: تعمل تلقائياً عندما يقوم الذكاء الاصطناعي بالرد بنجاح
             @Override
             public void onSuccess(GenerateContentResponse result) {
-                pbLoading.setVisibility(View.GONE);
-                btnAi.setEnabled(true);
-                tvAiResponse.setText(result.getText());
-                descriptionEditText.append("\n"+result.getText());
+                pbLoading.setVisibility(View.GONE); // إخفاء مؤشر التحميل (ProgressBar) لأن العملية انتهت
+                btnAi.setEnabled(true); // إعادة تفعيل زر الذكاء الاصطناعي ليتمكن المستخدم من الضغط عليه مجدداً
+
+                tvAiResponse.setText(result.getText()); // عرض نص إجابة جيميني داخل عنصر النص المخصص للذكاء الاصطناعي
+                descriptionEditText.append("\n" + result.getText()); // إضافة إجابة الذكاء الاصطناعي أيضاً أسفل الوصف الحالي للنبتة
             }
 
-
+            // دالة الفشل: تعمل تلقائياً في حال حدوث خطأ (مثل انقطاع الإنترنت أو مشاكل في السيرفر)
             @Override
             public void onFailure(Throwable t) {
-                pbLoading.setVisibility(View.GONE);
-                btnAi.setEnabled(true);
+                pbLoading.setVisibility(View.GONE); // إخفاء مؤشر التحميل بالرغم من الفشل
+                btnAi.setEnabled(true); // إعادة تفعيل الزر ليحاول المستخدم مرة أخرى
+
+                // إظهار رسالة خطأ (Toast) أسفل الشاشة تحتوي على تفاصيل المشكلة للمستخدم
                 Toast.makeText(getBaseContext(), "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
-        }, executor);
+        }, executor); // تمرير الـ executor لضمان تشغيل دالة النجاح أو الفشل على الواجهة الرئيسية
     }
 }
 // @Override

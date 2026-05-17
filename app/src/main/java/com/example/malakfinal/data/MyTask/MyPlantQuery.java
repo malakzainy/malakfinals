@@ -14,7 +14,14 @@ import java.util.List;
  * MyTaskDao
  * واجهة تحتوي على الاستعلامات الخاصة بجدول المهمات (tasks).
  */
-
+//هي Annotation في Room (Android) وتعني:
+//هذا الـ interface هو المسؤول عن تنفيذ العمليات على قاعدة البيانات تخزينها.
+//DAO اختصار لـ Data Access Object
+//أي الكائن الذي يتعامل مع:
+//الإدخال Insert
+//التعديل Update
+//الحذف Delete
+//الاستعلام Query
 @Dao
 public interface MyPlantQuery {
 

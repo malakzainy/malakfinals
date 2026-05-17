@@ -6,9 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity //  يحدد أن هذه الفئة هي جدول في قاعدة البيانات
 //@Entity ➜ تخبر النظام أن الكلاس  هو كيان (Entity).
-//
 //كل كائن (Object) من هذا الكلاس = صف (Row) في جدول.
-//
 //اسم الجدول يكون عادة نفس اسم الكلاس (User) ما لم تحدد اسمًا آخر.
 //تحويل كلاس Java إلى جدول داخل قاعدة البيانات.
 //@Id ➜ تحدد المفتاح الأساسي (Primary Key).
@@ -27,8 +25,11 @@ public class Plant {
     public Plant()
     {}
     public Plant(String title, String description) {
+        //، هذا الكود يتعامل مع قاعدة بيانات Firebase (من خلال الكلمة DataSnapshot). قاعدة بيانات
+        // Firebase تشترط دائماً وجود مشيّد افتراضي فارغ (بدون معاملات) مثل ()public Plant
+        // حتى تستطيع تحويل البيانات القادمة من الإنترنت إلى كائن (Object) داخل الجافا تلقائياً.
         // Default constructor required for calls to DataSnapshot.getValue(Plant.class)
-        this.plantId = ""; // Initialize to non-null
+        this.plantId = "";// Initialize to non-null
         this.title = title;
         this.description = description;
     }

@@ -13,7 +13,14 @@ import java.util.List;
  * MyUserDao
  * واجهة تحتوي على عناوين الدوال + الاستعلامات الخاصة بجدول المستخدمين (users).
  */
-
+//هي Annotation في Room (Android) وتعني:
+//هذا الـ interface هو المسؤول عن تنفيذ العمليات على قاعدة البيانات.
+//DAO اختصار لـ Data Access Object
+//أي الكائن الذي يتعامل مع:
+//الإدخال Insert
+//التعديل Update
+//الحذف Delete
+//الاستعلام Query
 @Dao
 public interface MyUserQuery {
 

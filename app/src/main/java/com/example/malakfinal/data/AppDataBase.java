@@ -63,7 +63,7 @@ import com.example.malakfinal.data.MyUserTable.MyUserQuery;
                                 "asthma_app_db" // اسم قاعدة البيانات
                         )
                         .fallbackToDestructiveMigration() // إعادة بناء القاعدة عند التغيير
-                        .allowMainThreadQueries() // للسماح بالعمليات على Main Thread (يفضل استخدام Async لاحقًا)
+                        .allowMainThreadQueries() // تسمح بإجراء عمليات القراءة والكتابة من قاعدة البيانات على الواجهة الرئيسية للتطبيق
                         .build();
             }
             return db;

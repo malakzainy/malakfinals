@@ -64,6 +64,12 @@ public class SignUp extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
 
         // Firebase init
+        //FirebaseAuth: هي الخدمة الجاهزة من جوجل المسؤولية عن إدارة الحسابات والمصادقة (Authentication).
+        //.getInstance(): دالة تقوم بجلب نسخة نشطة ومستمرة من هذه الخدمة لتعمل داخل الشاشة الحالية.
+        //بعد كتابة هذا السطر، يصبح المتغير auth جاهزاً للقيام بـ:
+        //إنشاء حساب جديد للمستخدم ببريده وكلمة مروره.
+        //تسجيل الدخول أو تسجيل الخروج بأمان.
+        //فحص حالة المستخدم (هل هو مسجل دخول حالياً أم يحتاج للانتقال لشاشة الـ Login؟).
         auth = FirebaseAuth.getInstance();
         //Realtime Database
 
