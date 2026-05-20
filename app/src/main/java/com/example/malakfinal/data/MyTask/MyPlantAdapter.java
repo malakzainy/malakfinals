@@ -1,6 +1,10 @@
 package com.example.malakfinal.data.MyTask;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +55,7 @@ public class MyPlantAdapter extends ArrayAdapter<Plant> {
      * @param parent      الواجهة الأب التي سيتم إرفاق هذا العنصر بها
      * @return View يمثل عنصرًا واحدًا في القائمة
      */
+    @SuppressLint("SuspiciousIndentation")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -62,14 +67,16 @@ public class MyPlantAdapter extends ArrayAdapter<Plant> {
 
 
         // ربط عناصر الواجهة مع المتغيرات
-        ImageView malak = vitem.findViewById(R.id.child);
+        ImageView treeImg = vitem.findViewById(R.id.img_plant);
         TextView tvTitle = vitem.findViewById(R.id.tvTitle);
         TextView tvText = vitem.findViewById(R.id.tvText);
         TextView tvImportance = vitem.findViewById(R.id.tvImportance);
 
+
         // جلب كائن Plant الحالي
         Plant current = getItem(position);
-
+        if (current.getImage()!= null && current.getImage().length()>0)
+            treeImg.setImageBitmap(stringToBitmap(current.getImage()));
         // عرض بيانات النبات داخل عناصر الواجهة
         if (current != null)
             tvTitle.setText(current.getTitle());
@@ -78,6 +85,16 @@ public class MyPlantAdapter extends ArrayAdapter<Plant> {
 
             return vitem;
     }
+    private Bitmap stringToBitmap(String imageString) {
+        if (imageString == null || imageString.isEmpty()) return null;
+        try {
+            byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public long getReminderTime() {
         return reminderTime;
     }
@@ -86,6 +103,7 @@ public class MyPlantAdapter extends ArrayAdapter<Plant> {
         this.reminderTime = reminderTime;
     }
 }
+
 // @Override
 //@Override هي Annotation (تعليمة توضيحية) بنحطها فوق دالة لما نكون عم نعيد تعريف (Override) دالة موجودة أصلاً في كلاس أب (Superclass) أو Interface.
 //تتأكد إنك فعلاً عم تعيد تعريف دالة موجودة

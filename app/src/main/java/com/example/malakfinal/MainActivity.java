@@ -1,11 +1,11 @@
 package com.example.malakfinal;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,16 +13,15 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.malakfinal.data.AppDataBase;
 import com.example.malakfinal.data.MyTask.MyPlantAdapter;
 import com.example.malakfinal.data.MyTask.Plant;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,7 +36,7 @@ import java.util.ArrayList;
  * <p>
  * تقوم بعرض قائمة النباتات المخزنة في قاعدة البيانات
  * باستخدام ListView و MyPlantAdapter، كما توفر زرًا
- * لإضافة نبات جديد.
+ * لإضافة نبات جديد وشريط تنقل سفلي.
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -47,15 +46,17 @@ public class MainActivity extends AppCompatActivity {
 
     /** Adapter مخصص لعرض كائنات Plant داخل ListView */
     private MyPlantAdapter adapter;
-    private FloatingActionButton fab;
+    private FloatingActionButton fabAdd;
+    private BottomNavigationView bottomNavigationView;
 
     /**
      * تُستدعى هذه الدالة عند إنشاء الصفحة.
      * تقوم بتهيئة الواجهة وربط عناصرها،
-     * وإعداد زر الإضافة وقائمة النباتات.
+     * وإعداد زر الإضافة وقائمة النباتات وشريط التنقل.
      *
      * @param savedInstanceState البيانات المحفوظة عند إعادة إنشاء الصفحة
      */
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,27 +66,70 @@ public class MainActivity extends AppCompatActivity {
 
         // ربط ListView
         lstvTasks = findViewById(R.id.lstvTasks);
-        fab = findViewById(R.id.fabAdd);
+        fabAdd = findViewById(R.id.fabAdd);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddPlantActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // تهيئة الـ Adapter وربطه مع الـ ListView
-        adapter = new MyPlantAdapter(this, R.layout.task_item_layout, new ArrayList<>());
+        adapter = new MyPlantAdapter(this, R.layout.plant_item_layout, new ArrayList<>());
         lstvTasks.setAdapter(adapter);
 
-
-        // زر الإضافة (Floating Action Button)
-         FloatingActionButton fab = findViewById(R.id.main);
-
-        // عند الضغط على زر الإضافة يتم فتح شاشة إضافة نبات
-        fab.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AddPlantActivity.class);
-            startActivity(intent);
+        // إعداد المستمع لنقرات شريط التنقل السفلي
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.nav_home) {
+                    // نحن بالفعل في الشاشة الرئيسية
+                    return true;
+                } else if (id == R.id.nav_child_report) {
+                    Intent intent = new Intent(MainActivity.this, ChildReport.class);
+                    startActivity(intent);
+                    return true;
+                } else if (id == R.id.nav_parents_report) {
+                    Intent intent = new Intent(MainActivity.this, ParentsReport.class);
+                    startActivity(intent);
+                    return true;
+                } else if (id == R.id.nav_logout) {
+                    showLogoutDialog();
+                    return true;
+                }
+                return false;
+            }
         });
+    }
 
-        // التعامل مع هوامش الشاشة
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+    /**
+     * عرض ديالوج لتأكيد تسجيل الخروج
+     */
+    private void showLogoutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Log Out");
+        builder.setMessage("Are you sure you want to log out?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
         });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 
     /**
@@ -94,23 +138,18 @@ public class MainActivity extends AppCompatActivity {
      * حتى تظهر أحدث البيانات.
      */
     @Override
-    //MainActivity זימון למחלקת
     protected void onResume() { // تتنفذ دائما عند فتح هذه الشاشة
         super.onResume();
-        adapter.addAll(AppDataBase.getDB(this).getMyPlantQuery().getAllPlants());
-        //تنظيف المنسق من جميع المعطيات السابقه
+        // تأكد من أن أيقونة Home هي المختارة عند العودة
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        
         adapter.clear();
-        //اضافة المعطيات الجديدة
         getAllFromFirebase(adapter);
-        //تحديث المنسق
-        adapter.notifyDataSetChanged();
-
     }
 
 
     // notification
     //طلب اذن الاشعارات
-
     private final ActivityResultLauncher<String> requestNotificationPermissionLauncher = registerForActivityResult( new ActivityResultContracts.RequestPermission(),
             isGranted -> {
                 if (!isGranted) {
@@ -120,30 +159,24 @@ public class MainActivity extends AppCompatActivity {
     );
 
     private void getAllFromFirebase(MyPlantAdapter adapter) {
-        //عنوان قاعدة البيانات
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        // عنوان مجموعة المعطيات داخل قاعدة البيانات
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) return;
+        
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
         DatabaseReference myRef = database.getReference("plants").child(uid);
-//إضافة listener مما يسبب الإصغاء لكل تغيير حتلنة عرض المعطيات//
+
         myRef.addValueEventListener(new ValueEventListener() {
-            @Override//دالة معالج حدث تقوم بتلقى نسخة عن كل المعطيات عند أي تغيير
+            @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                adapter.clear();//حذف كل المعطيات بالوسيط
+                adapter.clear();
                 for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
-                    //  استخراج كل المعطيات على وتحويلها لكائن ملائم//
                     Plant plant = taskSnapshot.getValue(Plant.class);
                     adapter.add(plant);
                 }
                 adapter.notifyDataSetChanged();
-                Toast.makeText(MainActivity.this, "Data fetched successfully", Toast.LENGTH_SHORT).show();
-
-
             }
 
-
-            @Override//بحالة فشل استخراج المعطيات
+            @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(MainActivity.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
             }
@@ -151,4 +184,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-

@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // 🔥 دخول تلقائي إذا المستخدم مسجل مسبقًا
         if (auth.getCurrentUser() != null) {
-            Intent intent = new Intent(LoginActivity.this, RoleSelection.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8BBD0"> <!-- زهري فاتح -->
@@ -15,22 +16,15 @@
         android:background="#FFFFFF"
         android:padding="10dp"/>
 
-    <!-- Spinner -->
-    <Spinner
-        android:id="@+id/spnrSubject"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/srchV"
-        android:layout_marginHorizontal="10dp"
-        android:background="#FCE4EC"/> <!-- زهري فاتح جدا -->
-
     <!-- ListView -->
     <ListView
         android:id="@+id/lstvTasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/spnrSubject"
+        android:layout_below="@id/srchV"
+        android:layout_above="@+id/bottom_navigation"
         android:layout_margin="10dp"
+        tools:listitem="@layout/plant_item_layout"
         android:dividerHeight="1dp"
         android:background="#F48FB1"/> <!-- زهري متوسط -->
 
@@ -39,10 +33,19 @@
         android:id="@+id/fabAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/bottom_navigation"
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
         android:src="@android:drawable/ic_input_add"
         app:backgroundTint="#EC407A"/> <!-- زهري غامق -->
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        app:menu="@menu/bottom_nav_menu" />
 
 </RelativeLayout>

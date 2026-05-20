@@ -18,9 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Malakfinal">
-        <activity
-            android:name=".SmartTaskAssistant"
-            android:exported="false" />
+
 
         <service
             android:name=".data.MyTask.TaskSyncService"
@@ -38,9 +36,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-        <activity
-            android:name=".ScanResult"
-            android:exported="false" />
+
         <activity
             android:name=".ChildReport"
             android:exported="false" />

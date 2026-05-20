@@ -455,7 +455,7 @@ public class AddPlantActivity extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         addPlantToRoom();
                         scheduleAlarm(plant,selectedReminderTime);
-
+                        finish();
                         Toast.makeText(AddPlantActivity.this, "Succeeded to add Plant", Toast.LENGTH_SHORT).show();
                     }
                 })

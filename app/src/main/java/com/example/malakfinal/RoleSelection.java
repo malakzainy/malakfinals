@@ -62,7 +62,7 @@ public class RoleSelection extends AppCompatActivity {
         // ربط عناصر الواجهة
         tV = findViewById(R.id.tV);
         parents = findViewById(R.id.parents);
-        child = findViewById(R.id.child);
+        child = findViewById(R.id.img_plant);
 
         /**
          * حدث زر الأهل
