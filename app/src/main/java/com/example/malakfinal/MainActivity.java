@@ -41,11 +41,13 @@ import java.util.ArrayList;
  */
 public class MainActivity extends AppCompatActivity {
 
+
     /** ListView لعرض قائمة النباتات */
     private ListView lstvTasks;
 
     /** Adapter مخصص لعرض كائنات Plant داخل ListView */
     private MyPlantAdapter adapter;
+    private FloatingActionButton fab;
 
     /**
      * تُستدعى هذه الدالة عند إنشاء الصفحة.
@@ -63,19 +65,20 @@ public class MainActivity extends AppCompatActivity {
 
         // ربط ListView
         lstvTasks = findViewById(R.id.lstvTasks);
+        fab = findViewById(R.id.fabAdd);
+        // تهيئة الـ Adapter وربطه مع الـ ListView
+        adapter = new MyPlantAdapter(this, R.layout.task_item_layout, new ArrayList<>());
+        lstvTasks.setAdapter(adapter);
+
 
         // زر الإضافة (Floating Action Button)
-        FloatingActionButton fab = findViewById(R.id.main);
+         FloatingActionButton fab = findViewById(R.id.main);
 
         // عند الضغط على زر الإضافة يتم فتح شاشة إضافة نبات
         fab.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddPlantActivity.class);
             startActivity(intent);
         });
-
-        // تهيئة الـ Adapter وربطه مع الـ ListView
-        adapter = new MyPlantAdapter(this, R.layout.task_item_layout, new ArrayList<>());
-        lstvTasks.setAdapter(adapter);
 
         // التعامل مع هوامش الشاشة
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -94,16 +97,15 @@ public class MainActivity extends AppCompatActivity {
     //MainActivity זימון למחלקת
     protected void onResume() { // تتنفذ دائما عند فتح هذه الشاشة
         super.onResume();
+        adapter.addAll(AppDataBase.getDB(this).getMyPlantQuery().getAllPlants());
         //تنظيف المنسق من جميع المعطيات السابقه
         adapter.clear();
         //اضافة المعطيات الجديدة
-      //  adapter.addAll(AppDataBase.getDB(this).getMyPlantQuery().getAllPlants());
         getAllFromFirebase(adapter);
         //تحديث المنسق
         adapter.notifyDataSetChanged();
 
     }
-    //
 
 
     // notification
@@ -147,9 +149,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    //
-
-
 
 }
 

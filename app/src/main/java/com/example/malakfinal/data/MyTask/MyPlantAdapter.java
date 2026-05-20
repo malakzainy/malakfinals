@@ -57,9 +57,9 @@ public class MyPlantAdapter extends ArrayAdapter<Plant> {
 
         // إعادة استخدام الـ View إذا كان موجودًا لتحسين الأداء
         View vitem = convertView;
-        if (vitem == null) {
+        if (vitem == null)
             vitem = LayoutInflater.from(getContext()).inflate(itemLayout, parent, false);
-        }
+
 
         // ربط عناصر الواجهة مع المتغيرات
         ImageView malak = vitem.findViewById(R.id.child);
@@ -71,13 +71,12 @@ public class MyPlantAdapter extends ArrayAdapter<Plant> {
         Plant current = getItem(position);
 
         // عرض بيانات النبات داخل عناصر الواجهة
-        if (current != null) {
+        if (current != null)
             tvTitle.setText(current.getTitle());
             tvText.setText(current.getDescription());
          //   tvImportance.setText(current.getImportance());
-        }
 
-        return vitem;
+            return vitem;
     }
     public long getReminderTime() {
         return reminderTime;
