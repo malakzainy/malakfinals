@@ -1,101 +1,87 @@
 package com.example.malakfinal;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.malakfinal.data.MyAsthmaTable.AsthmaUser;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 /**
- * ParentsReport Activity
- *
- * هذا الـ Activity مسؤول عن عرض تقرير خاص بالأهل،
- * ويحتوي على معلومات المريض الطبية مثل:
- * الاسم، العمر، رقم المريض، التشخيص،
- * آخر زيارة، الأدوية، الملاحظات و Peak Flow.
- *
- * كما يحتوي على أزرار للحفظ، الطباعة، والانتقال لشاشة أخرى.
+ * ChildReport هي شاشة تعرض تقريرًا طبيًا لطفل.
+ * <p>
+ * تحتوي هذه الصفحة على معلومات مثل الاسم، العمر، رقم المريض،
+ * التشخيص، آخر زيارة، الأدوية، الملاحظات، وقيمة Peak Flow.
+ * كما تحتوي على أزرار للحفظ، الطباعة، ومسح البيانات.
  */
 public class ParentsReport extends AppCompatActivity {
 
     /** عنوان الصفحة */
     private TextView tvHeader;
 
-    /** اسم العيادة */
-    private TextView clinic;
 
-    /** نص ثابت لاسم المريض */
-    private TextView Name;
-
-    /** حقل إدخال اسم المريض */
+    /** حقل إدخال اسم الطفل */
     private TextView etName;
 
-    /** حقل عرض عمر المريض */
-    private TextView Age;
+    /** حقل إدخال عمر الطفل */
+    private EditText etAge;
 
-    /** نص ثابت لرقم المريض */
-    private TextView Patient;
 
     /** حقل إدخال رقم المريض */
     private TextView etPatientId;
 
-    /** نص ثابت للتشخيص */
-    private TextView Diagnosis;
-
     /** حقل إدخال التشخيص */
     private TextView etDiagnosis;
-
-    /** نص ثابت لآخر زيارة */
-    private TextView LastV;
 
     /** حقل إدخال تاريخ آخر زيارة */
     private TextView etLastVisit;
 
-    /** نص ثابت للأدوية */
-    private TextView Medications;
 
     /** حقل إدخال الأدوية */
     private TextView etMedications;
 
-    /** نص ثابت للملاحظات */
-    private TextView DN;
-
     /** حقل إدخال الملاحظات */
     private TextView etNotes;
 
-    /** نص ثابت لقيمة Peak Flow */
-    private TextView PeakFlow;
 
-    /** حقل إدخال قيمة Peak Flow */
-    private TextView etPeakFlow;
 
 
     /** زر حفظ التقرير */
     private Button btnSave;
 
-
+    /** زر للانتقال الى شاشة التصوير*/
+    private Button btnTree;
 
     /**
-     * دالة onCreate
+     * يتم استدعاء هذه الدالة عند إنشاء الشاشة.
+     * تقوم بربط عناصر الواجهة (XML) بالمتغيرات البرمجية
+     * وإعداد أحداث النقر على الأزرار.
      *
-     * يتم استدعاؤها عند إنشاء الـ Activity،
-     * وتقوم بربط عناصر الواجهة من ملف XML
-     * وإعداد مستمعي الأحداث للأزرار.
-     *
-     * @param savedInstanceState حالة محفوظة للنشاط (إن وجدت)
+     * @param savedInstanceState البيانات المحفوظة عند إعادة إنشاء الصفحة
      */
+    @SuppressLint("MissingInflatedId")
     @Override
+    // זימון למחלקת ChildReport
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_child_report);
 
-        // التعامل مع هوامش النظام (Status Bar / Navigation Bar)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -103,25 +89,16 @@ public class ParentsReport extends AppCompatActivity {
         });
 
         // ربط عناصر الواجهة
-        tvHeader = findViewById(R.id.tvHeader);
-        clinic = findViewById(R.id.clinic);
-        Name = findViewById(R.id.Name);
         etName = findViewById(R.id.etName);
-        Age = findViewById(R.id.Age);
-        Patient = findViewById(R.id.Patient);
+        etAge = findViewById(R.id.etAge);
         etPatientId = findViewById(R.id.etPatientId);
-        Diagnosis = findViewById(R.id.Diagnosis);
         etDiagnosis = findViewById(R.id.etDiagnosis);
-        LastV = findViewById(R.id.LastV);
         etLastVisit = findViewById(R.id.etLastVisit);
-        Medications = findViewById(R.id.Medications);
         etMedications = findViewById(R.id.etMedications);
-        DN = findViewById(R.id.DN);
         etNotes = findViewById(R.id.etNotes);
-        PeakFlow = findViewById(R.id.PeakFlow);
-        etPeakFlow = findViewById(R.id.etPeakFlow);
-        btnSave = findViewById(R.id.btnSave);
 
-        };
+
     }
+
+}
 

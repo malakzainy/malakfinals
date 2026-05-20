@@ -1,229 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:padding="12dp"
-    android:id="@+id/main">
-
+    android:background="#F8F6FB"
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Header -->
+        <!-- Title -->
         <TextView
-            android:id="@+id/tvHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Medical Report — Asthma"
-            android:textSize="20sp"
+            android:text="Medical Report – Asthma"
+            android:textSize="22sp"
             android:textStyle="bold"
+            android:textColor="#4A3F6B"
             android:gravity="center"
-            android:paddingBottom="12dp"/>
+            android:paddingBottom="16dp"/>
 
-        <!-- Clinic / Doctor info (optional) -->
-        <TextView
+        <!-- Name -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Clinic: Al-Salam Medical Center"
-            android:textSize="12sp"
-            android:paddingBottom="8dp"/>
+            android:hint="Name">
 
-        <!-- Card-like container -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#ffffff"
-            android:padding="12dp"
-            android:elevation="2dp">
-
-            <!-- Row: Name + Age -->
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3"
-                android:paddingBottom="8dp">
+                android:text="Malak Zainy"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="vertical"
-                    android:paddingEnd="8dp">
+        <!-- Age -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Age"
+            android:layout_marginTop="10dp">
 
-                    <TextView
-                        android:id="@+id/Name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Name"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-                    <EditText
-                        android:id="@+id/etName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter patient name"
-                        android:inputType="textPersonName"
-                        android:singleLine="true"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/Age"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Age"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Age"
-                        android:inputType="number"
-                        android:singleLine="true" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Patient ID -->
-            <TextView
-                android:id="@+id/Patient"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAge"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Patient ID"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-            <EditText
+                android:text="6"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Patient ID -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Patient ID"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPatientId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="e.g. 123456"
-                android:inputType="text"
-                android:singleLine="true"
-                android:paddingBottom="8dp"/>
+                android:text="493"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Diagnosis -->
-            <TextView
-                android:id="@+id/Diagnonsis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Diagnosis"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-            <EditText
+        <!-- Diagnosis -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Diagnosis"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDiagnosis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="e.g. Asthma — Moderate Persistent"
-                android:inputType="textCapSentences"
-                android:singleLine="false"
-                android:maxLines="2"
-                android:paddingBottom="8dp"/>
+                android:text="Asthma"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Last Visit (date) -->
-            <TextView
-                android:id="@+id/LastV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Last Visit (YYYY-MM-DD)"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-            <EditText
+        <!-- Last Visit -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Last Visit"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etLastVisit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="2025-10-15"
-                android:inputType="date"
-                android:singleLine="true"
-                android:paddingBottom="8dp"/>
+                android:text="7.4.2026"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Medications -->
-            <TextView
-                android:id="@+id/Medications"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Medications"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-            <EditText
+        <!-- Medications -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Medications"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etMedications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="• Salbutamol Inhaler — 2 puffs prn\n• Fluticasone — 1 puff BID"
-                android:inputType="textMultiLine"
-                android:minLines="2"
-                android:maxLines="4"
-                android:paddingBottom="8dp"/>
+                android:text="Salbutamol and Ventolin"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Doctor Notes -->
-            <TextView
-                android:id="@+id/DN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Doctor Notes"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-            <EditText
+        <!-- Notes -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Doctor Notes"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etNotes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Advice, follow-up, triggers, etc."
-                android:inputType="textMultiLine"
                 android:minLines="3"
-                android:maxLines="6"
-                android:paddingBottom="12dp"/>
+                android:text="The patient has a medical history of asthma since 1st, 2009"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Peak Flow / Measurements (optional) -->
-            <TextView
-                android:id="@+id/PeakFlow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Peak Flow (L/min) — Optional"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-            <EditText
-                android:id="@+id/etPeakFlow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="e.g. 420"
-                android:inputType="number"
-                android:singleLine="true"
-                android:paddingBottom="8dp"/>
-        </LinearLayout>
-
-        <!-- Buttons row -->
+        <!-- Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:paddingTop="12dp"
-            android:weightSum="3">
-
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Save"/>
-
-        </LinearLayout>
-
-        <!-- Footer / Signature -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="16dp"/>
+            android:layout_marginTop="20dp"/>
 
     </LinearLayout>
+
 </ScrollView>

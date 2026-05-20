@@ -1,5 +1,6 @@
 package com.example.malakfinal;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -33,56 +34,30 @@ public class ChildReport extends AppCompatActivity {
     /** عنوان الصفحة */
     private TextView tvHeader;
 
-    /** اسم العيادة */
-    private TextView clinic;
-
-    /** تسمية حقل الاسم */
-    private TextView Name;
 
     /** حقل إدخال اسم الطفل */
     private TextView etName;
 
-    /** تسمية حقل العمر */
-    private TextView Age;
-
     /** حقل إدخال عمر الطفل */
     private EditText etAge;
 
-    /** تسمية رقم المريض */
-    private TextView Patient;
 
     /** حقل إدخال رقم المريض */
     private TextView etPatientId;
 
-    /** تسمية التشخيص */
-    private TextView Diagnosis;
-
     /** حقل إدخال التشخيص */
     private TextView etDiagnosis;
-
-    /** تسمية آخر زيارة */
-    private TextView LastV;
 
     /** حقل إدخال تاريخ آخر زيارة */
     private TextView etLastVisit;
 
-    /** تسمية الأدوية */
-    private TextView Medications;
 
     /** حقل إدخال الأدوية */
     private TextView etMedications;
 
-    /** تسمية الملاحظات */
-    private TextView DN;
-
     /** حقل إدخال الملاحظات */
     private TextView etNotes;
 
-    /** تسمية Peak Flow */
-    private TextView PeakFlow;
-
-    /** حقل إدخال قيمة Peak Flow */
-    private TextView etPeakFlow;
 
 
 
@@ -99,6 +74,7 @@ public class ChildReport extends AppCompatActivity {
      *
      * @param savedInstanceState البيانات المحفوظة عند إعادة إنشاء الصفحة
      */
+    @SuppressLint("MissingInflatedId")
     @Override
     // זימון למחלקת ChildReport
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,23 +89,13 @@ public class ChildReport extends AppCompatActivity {
         });
 
         // ربط عناصر الواجهة
-        tvHeader = findViewById(R.id.tvHeader);
-        clinic = findViewById(R.id.clinic);
-        Name = findViewById(R.id.Name);
         etName = findViewById(R.id.etName);
-        Age = findViewById(R.id.Age);
-        Patient = findViewById(R.id.Patient);
+        etAge = findViewById(R.id.etAge);
         etPatientId = findViewById(R.id.etPatientId);
-        Diagnosis = findViewById(R.id.Diagnosis);
         etDiagnosis = findViewById(R.id.etDiagnosis);
-        LastV = findViewById(R.id.LastV);
         etLastVisit = findViewById(R.id.etLastVisit);
-        Medications = findViewById(R.id.Medications);
         etMedications = findViewById(R.id.etMedications);
-        DN = findViewById(R.id.DN);
         etNotes = findViewById(R.id.etNotes);
-        PeakFlow = findViewById(R.id.PeakFlow);
-        etPeakFlow = findViewById(R.id.etPeakFlow);
 
 
         btnSave = findViewById(R.id.btnSave);
@@ -197,11 +163,6 @@ public class ChildReport extends AppCompatActivity {
             return;
         }
 
-        String peakFlow = etPeakFlow.getText().toString().trim();
-        if (peakFlow.isEmpty()) {
-            etPeakFlow.setError("Peak Flow is required");
-            return;
-        }
             }
         });
     }

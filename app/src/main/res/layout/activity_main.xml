@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8BBD0"> <!-- زهري فاتح -->
+    android:background="#F8BBD0">
 
     <!-- Search -->
     <EditText
@@ -26,7 +26,7 @@
         android:layout_margin="10dp"
         tools:listitem="@layout/plant_item_layout"
         android:dividerHeight="1dp"
-        android:background="#F48FB1"/> <!-- زهري متوسط -->
+        android:background="#F48FB1"/>
 
     <!-- Floating Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -37,7 +37,7 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
         android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="#EC407A"/> <!-- زهري غامق -->
+        app:backgroundTint="#EC407A"/>
 
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
